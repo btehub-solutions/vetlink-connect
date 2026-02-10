@@ -3,6 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, MessageCircle } from "lucide-react";
 import { whatsappLink } from "@/lib/whatsapp";
 
+import imgViramax150 from "@/assets/products/viramax-150ml.png";
+import imgMaxitet from "@/assets/products/maxitet.png";
+import imgViramaxLg from "@/assets/products/viramax-large.png";
+import imgMaxiceryl from "@/assets/products/maxiceryl.png";
+import imgVitaconc from "@/assets/products/maxi-vitaconc.png";
+import imgEnrocoli from "@/assets/products/enrocoli-max.png";
+import imgEctomax from "@/assets/products/ectomax.png";
+import imgMaxiyield from "@/assets/products/maxiyield-dogfood.png";
+import imgMaxicocc from "@/assets/products/maxicocc.png";
+
 type Category = "All" | "Livestock" | "Pet" | "Vet Supplies";
 
 interface Product {
@@ -10,18 +20,19 @@ interface Product {
   category: "Livestock" | "Pet" | "Vet Supplies";
   desc: string;
   fullDesc: string;
+  image: string;
 }
 
 const products: Product[] = [
-  { name: "Livestock Vaccines", category: "Livestock", desc: "High-quality vaccines for cattle, poultry, and farm animals.", fullDesc: "Comprehensive range of livestock vaccines including those for foot-and-mouth disease, brucellosis, and Newcastle disease. Properly stored and handled for maximum efficacy." },
-  { name: "Pet Supplements", category: "Pet", desc: "Nutritional supplements for optimal pet health.", fullDesc: "Premium vitamins, minerals, and nutritional supplements formulated for dogs, cats, and other companion animals. Supports immune health, joint care, and coat quality." },
-  { name: "Surgical Instruments", category: "Vet Supplies", desc: "Professional-grade surgical tools for veterinarians.", fullDesc: "Stainless steel surgical instruments including scalpels, forceps, hemostats, and suture kits. Designed for durability and precision in veterinary procedures." },
-  { name: "Animal Feed Additives", category: "Livestock", desc: "Boost nutrition and growth in livestock.", fullDesc: "Scientifically formulated feed additives that enhance nutrient absorption, promote growth, and improve overall animal health and productivity." },
-  { name: "Diagnostic Equipment", category: "Vet Supplies", desc: "Modern diagnostic tools for accurate results.", fullDesc: "State-of-the-art diagnostic equipment including rapid test kits, thermometers, stethoscopes, and portable ultrasound devices for field and clinic use." },
-  { name: "Pet Grooming Supplies", category: "Pet", desc: "Everything needed for professional pet grooming.", fullDesc: "Complete grooming toolkit including shampoos, conditioners, brushes, nail clippers, and ear cleaning solutions. Suitable for all breeds and coat types." },
-  { name: "Livestock Dewormers", category: "Livestock", desc: "Effective deworming solutions for all farm animals.", fullDesc: "Broad-spectrum and targeted deworming medications for cattle, sheep, goats, and poultry. Available in oral, injectable, and pour-on formulations." },
-  { name: "Veterinary Syringes", category: "Vet Supplies", desc: "Sterile, reliable syringes for all applications.", fullDesc: "Disposable and reusable syringes in various sizes (1ml to 60ml). Includes automatic syringes for mass vaccination programs and precision dosing." },
-  { name: "Animal Antibiotics", category: "Pet", desc: "Trusted antibiotics for treating infections.", fullDesc: "Prescription-grade antibiotics for bacterial infections in companion and farm animals. Includes both broad-spectrum and targeted formulations." },
+  { name: "Viramax 150ml", category: "Livestock", desc: "Vitamin K and Iodine supplement for veterinary use.", fullDesc: "Viramax contains Vitamin K and Iodine, manufactured by Divine Agvet Limited. For use in cattle, poultry, goats, and other farm animals. NAFDAC: A10-0093. 150ml bottle.", image: imgViramax150 },
+  { name: "Maxitet Antibiotic", category: "Vet Supplies", desc: "Oxytetracycline Hydrochloride broad-spectrum antibiotic.", fullDesc: "Maxitet is a soluble powder containing Oxytetracycline Hydrochloride BP (Vet). Broad-spectrum antibiotic for veterinary use only. 100g net weight. NAFDAC: A18-0517.", image: imgMaxitet },
+  { name: "Viramax 150ml (Large)", category: "Livestock", desc: "Larger format Vitamin K and Iodine for herds.", fullDesc: "Viramax Vitamin K and Iodine in larger bottle format for managing bigger herds. Manufactured by Divine Agvet Limited. NAFDAC: A10-0093.", image: imgViramaxLg },
+  { name: "Maxiceryl", category: "Vet Supplies", desc: "Antibiotics + Multivitamin combination for animals.", fullDesc: "Maxiceryl combines antibiotics with multivitamins for comprehensive veterinary care. 100g net weight. For veterinary use only. Manufactured by Divine Agvet Limited.", image: imgMaxiceryl },
+  { name: "Maxi Vitaconc", category: "Livestock", desc: "Concentrated hydrosoluble vitamin and amino acid.", fullDesc: "Maxi Vitaconc is a highly concentrated hydrosoluble vitamin and amino acid supplement for veterinary use. 100g net weight. Manufactured by Divine Agvet Limited.", image: imgVitaconc },
+  { name: "Enrocoli-Max", category: "Vet Supplies", desc: "Enrofloxacin + Colistin broad spectrum antibiotics.", fullDesc: "Enrocoli-Max contains Enrofloxacin (100mg/g) and Colistin Sulphate (1.2 million IU/g). Broad spectrum antibiotics for veterinary use. 100g net weight.", image: imgEnrocoli },
+  { name: "Ectomax Spray", category: "Pet", desc: "Tick & lice spray — kills fleas, ticks, and repels mosquitoes.", fullDesc: "Ectomax Tick & Lice Spray kills fleas, ticks, flea eggs, flea larvae and repels mosquitoes. Breaks flea life cycle for up to 2 months. NAFDAC Reg. No. A-9672. By Divine Agvet Limited.", image: imgEctomax },
+  { name: "Maxiyield Dog Food", category: "Pet", desc: "Premium dog food with zinc, selenium, chicken & fish.", fullDesc: "Maxiyield Dog Food with Zinc & Selenium, Chicken & Fish flavour with Omega H3. 5kg pack for complete canine nutrition.", image: imgMaxiyield },
+  { name: "Maxicocc", category: "Livestock", desc: "Anticoccidials + Antibiotics for poultry and livestock.", fullDesc: "Maxicocc combines anticoccidials and antibiotics for effective prevention and treatment. 80g net weight. For veterinary use only. Manufactured by Divine Agvet Limited.", image: imgMaxicocc },
 ];
 
 const categories: Category[] = ["All", "Livestock", "Pet", "Vet Supplies"];
@@ -40,13 +51,11 @@ const ProductsPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      {/* Header */}
       <motion.div className="text-center mb-10" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-3xl md:text-5xl font-bold mb-3">Veterinary Products & Supplies</h1>
         <p className="text-muted-foreground text-lg">Browse our range — order via WhatsApp</p>
       </motion.div>
 
-      {/* Filters */}
       <div className="flex flex-wrap justify-center gap-3 mb-10">
         {categories.map((c) => (
           <button
@@ -61,7 +70,6 @@ const ProductsPage = () => {
         ))}
       </div>
 
-      {/* Grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filtered.map((p, i) => (
           <motion.div
@@ -72,8 +80,8 @@ const ProductsPage = () => {
             transition={{ delay: i * 0.05 }}
             onClick={() => setSelected(p)}
           >
-            <div className="h-40 bg-muted rounded-xl mb-4 flex items-center justify-center text-muted-foreground/40 text-5xl">
-              🏥
+            <div className="h-48 bg-muted rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+              <img src={p.image} alt={p.name} className="w-full h-full object-contain p-2" loading="lazy" />
             </div>
             <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 ${categoryClass[p.category]}`}>
               {p.category}
@@ -93,7 +101,6 @@ const ProductsPage = () => {
         ))}
       </div>
 
-      {/* Modal */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -115,8 +122,8 @@ const ProductsPage = () => {
               >
                 <X size={16} />
               </button>
-              <div className="h-48 bg-muted rounded-xl mb-6 flex items-center justify-center text-6xl text-muted-foreground/40">
-                🏥
+              <div className="h-56 bg-muted rounded-xl mb-6 overflow-hidden flex items-center justify-center">
+                <img src={selected.image} alt={selected.name} className="w-full h-full object-contain p-4" />
               </div>
               <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 ${categoryClass[selected.category]}`}>
                 {selected.category}

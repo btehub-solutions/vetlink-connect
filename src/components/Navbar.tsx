@@ -9,6 +9,10 @@ const navLinks = [
   { label: "Products", path: "/products" },
   { label: "Services", path: "/services" },
   { label: "Emergency", path: "/emergency" },
+  { label: "Locations", path: "/locations" },
+  { label: "Testimonials", path: "/testimonials" },
+  { label: "FAQs", path: "/faqs" },
+  { label: "Contact", path: "/contact" },
 ];
 
 const Navbar = () => {
@@ -24,12 +28,12 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-0.5">
           {navLinks.map((l) => (
             <Link
               key={l.path}
               to={l.path}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+              className={`px-3 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
                 location.pathname === l.path
                   ? "bg-primary text-primary-foreground"
                   : "text-foreground/70 hover:text-foreground hover:bg-muted"
@@ -46,7 +50,7 @@ const Navbar = () => {
             24/7 Available
           </div>
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
+            className="lg:hidden p-2 rounded-lg hover:bg-muted transition-colors"
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
           >
@@ -62,7 +66,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass border-t border-border/50 overflow-hidden"
+            className="lg:hidden glass border-t border-border/50 overflow-hidden"
           >
             <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
               {navLinks.map((l) => (
