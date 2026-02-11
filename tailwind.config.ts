@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+﻿import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
@@ -87,11 +87,41 @@ export default {
           "0%": { opacity: "0", transform: "translateY(30px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        "glow-pulse": {
+          "0%, 100%": { boxShadow: "0 0 8px hsl(152 56% 28% / 0.3), 0 0 20px hsl(152 56% 28% / 0.1)" },
+          "50%": { boxShadow: "0 0 16px hsl(152 56% 28% / 0.5), 0 0 40px hsl(152 56% 28% / 0.2)" },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-4px)" },
+        },
+        "border-glow": {
+          "0%, 100%": { borderColor: "hsl(152 56% 28% / 0.2)" },
+          "50%": { borderColor: "hsl(152 56% 28% / 0.6)" },
+        },
+        "slide-in-right": {
+          "0%": { opacity: "0", transform: "translateX(20px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        "reveal-up": {
+          "0%": { opacity: "0", transform: "translateY(20px) scale(0.98)" },
+          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.6s ease-out forwards",
+        "glow-pulse": "glow-pulse 2.5s ease-in-out infinite",
+        "shimmer": "shimmer 3s linear infinite",
+        "float": "float 3s ease-in-out infinite",
+        "border-glow": "border-glow 2s ease-in-out infinite",
+        "slide-in-right": "slide-in-right 0.4s ease-out forwards",
+        "reveal-up": "reveal-up 0.5s ease-out forwards",
       },
     },
   },

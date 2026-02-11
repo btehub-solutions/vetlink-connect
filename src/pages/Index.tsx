@@ -1,206 +1,319 @@
-import { motion } from "framer-motion";
-import { Beef, Cat, Stethoscope, Clock, ShieldCheck, Zap, ChevronLeft, ChevronRight, AlertTriangle } from "lucide-react";
-import { whatsappLink } from "@/lib/whatsapp";
 import { useState, useEffect } from "react";
-import heroBg from "@/assets/hero-bg.jpg";
+import { motion, AnimatePresence } from "framer-motion";
+import { Beef, ShieldCheck, ArrowRight, Phone, AlertTriangle, CheckCircle2, MapPin, Send } from "lucide-react";
+import InquiryFormModal from "@/components/InquiryFormModal";
+import { productContext, consultationContext, serviceContext, partnershipContext, generalContactContext, emergencyContext } from "@/lib/inquiry";
+import type { PageContext } from "@/lib/inquiry";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.15, duration: 0.5, ease: "easeOut" as const },
-  }),
-};
+// Product Images
+import imgViramax150 from "@/assets/products/viramax-150ml.png";
+import imgMaxitet from "@/assets/products/maxitet.png";
+import imgViramaxLg from "@/assets/products/viramax-large.png";
+import imgEctomax from "@/assets/products/ectomax.png";
+import imgMaxiyield from "@/assets/products/maxiyield-dogfood.png";
+import imgMaxicocc from "@/assets/products/maxicocc.png";
+import imgMaxiceryl from "@/assets/products/maxiceryl.png";
+import imgVitaconc from "@/assets/products/maxi-vitaconc.png";
 
-const features = [
-  {
-    icon: Beef,
-    title: "Livestock Veterinary Care",
-    desc: "Expert care for cattle, poultry, goats, and all farm animals",
-    msg: "I'm interested in livestock veterinary services.",
-    btn: "Learn More",
-  },
-  {
-    icon: Cat,
-    title: "Pet Health & Wellness",
-    desc: "Compassionate care for your beloved pets, day or night",
-    msg: "I need pet care services.",
-    btn: "Learn More",
-  },
-  {
-    icon: Stethoscope,
-    title: "Professional Vet Supplies",
-    desc: "Premium medications, equipment, and supplies",
-    msg: "I'd like to inquire about veterinary supplies.",
-    btn: "Shop Now",
-  },
+// UI Components
+import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { BentoGrid, BentoCard } from "@/components/home/BentoGrid";
+
+import { ExperienceSection } from "@/components/home/ExperienceSection";
+import { BrandedStatsCTA } from "@/components/home/BrandedStatsCTA";
+import { ImpactShowcase } from "@/components/home/ImpactShowcase";
+import { BrandSolutions } from "@/components/home/BrandSolutions";
+import { SmartProductExplorer } from "@/components/home/SmartProductExplorer";
+
+// Data - Contextualized for Nigeria
+const products = [
+  { name: "Viramax 150ml", category: "Livestock", img: imgViramax150, price: "Available" },
+  { name: "Maxitet Antibiotic", category: "Vet Supplies", img: imgMaxitet, price: "Available" },
+  { name: "Ectomax Spray", category: "Pet Care", img: imgEctomax, price: "Available" },
+  { name: "Maxiyield Food", category: "Nutrition", img: imgMaxiyield, price: "Available" },
+  { name: "Maxicocc", category: "Poultry", img: imgMaxicocc, price: "Available" },
+  { name: "Viramax Large", category: "Livestock", img: imgViramaxLg, price: "Available" },
 ];
 
-const testimonials = [
-  { quote: "Divine Agvet saved my herd during a sudden outbreak. Their 24/7 response is truly lifesaving.", name: "Alhaji Musa", role: "Livestock Farmer" },
-  { quote: "My dog received the best care here. The team is caring, knowledgeable, and always available.", name: "Ada Okonkwo", role: "Pet Owner" },
-  { quote: "Reliable supply chain for all our clinic needs. They deliver quality products consistently.", name: "Dr. Emeka", role: "Veterinary Professional" },
+import imgPoultryHero from "@/assets/generated/poultry-farm.jpg";
+import imgLivestockHero from "@/assets/generated/pets-livestock.jpg";
+import imgPetsHero from "@/assets/generated/pets-care.jpg";
+import imgVetTraining from "@/assets/generated/vet-training.jpg";
+
+const heroSlides = [
+  {
+    title: "Homegrown Solutions for Nigerian Farms",
+    subtitle: "Proudly Manufactured in Ogun State",
+    image: imgLivestockHero, // African cattle context
+    desc: "We understand the unique challenges of our tropical climate. That's why we formulate veterinary products that actually work here."
+  },
+  {
+    title: "Protect Your Poultry Investment",
+    subtitle: "Stop Mortality, Boost Production",
+    image: imgPoultryHero, // Poultry
+    desc: "From combating Coccidiosis in deep litter systems to boosting egg production in battery cages, we have you covered."
+  },
+  {
+    title: "Authentic Medicines. Zero Compromise.",
+    subtitle: "Say No to Fake Drugs",
+    image: imgPetsHero, // Farmer/Vet context
+    desc: "Direct from the factory to your farm. Trusted by vets and farmers across the nation."
+  }
 ];
+
+
+
+
 
 const HomePage = () => {
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
+  const [inquiryModal, setInquiryModal] = useState<{ context: PageContext; title?: string; subtitle?: string } | null>(null);
+
+  // Preload images
+  useEffect(() => {
+    heroSlides.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.image;
+    });
+  }, []);
+  
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentTestimonial((p) => (p + 1) % testimonials.length);
-    }, 5000);
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000); 
     return () => clearInterval(timer);
   }, []);
+  
+
 
   return (
-    <div>
-      {/* Hero */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={heroBg} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/60 to-foreground/30" />
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
+    <div className="bg-background min-h-screen selection:bg-emerald-100">
+      
+      {/* 1. HERO SECTION: Brand Promise */}
+      <section className="relative h-[90vh] min-h-[600px] overflow-hidden bg-slate-900">
+        <AnimatePresence>
           <motion.div
-            className="max-w-2xl"
-            initial="hidden"
-            animate="visible"
-            variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
+            key={currentSlide}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }} 
+            transition={{ duration: 2.0, ease: "easeInOut" }}
+            className="absolute inset-0 bg-slate-900" 
           >
-            <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emergency/20 text-emergency border border-emergency/30 text-sm font-semibold mb-6">
-              <Clock size={16} className="animate-pulse" />
-              24/7 Available
-            </motion.div>
-            <motion.h1 variants={fadeUp} custom={1} className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              Premium Veterinary Care & Supplies — Available 24/7
-            </motion.h1>
-            <motion.p variants={fadeUp} custom={2} className="text-lg text-white/70 mb-8 max-w-lg">
-              Serving livestock owners, pet lovers, and veterinary professionals across Nigeria with excellence.
-            </motion.p>
-            <motion.a
-              variants={fadeUp}
-              custom={3}
-              href={whatsappLink("Hello, I'd like to inquire about your veterinary services.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-whatsapp text-base"
-            >
-              💬 Chat with Us on WhatsApp
-            </motion.a>
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/50 to-transparent z-10" /> 
+            <img
+              src={heroSlides[currentSlide].image}
+              alt={heroSlides[currentSlide].title}
+              className="w-full h-full object-cover"
+            />
           </motion.div>
-        </div>
-      </section>
+        </AnimatePresence>
 
-      {/* Feature Cards */}
-      <section className="container mx-auto px-4 -mt-16 relative z-20 mb-20">
-        <div className="grid md:grid-cols-3 gap-6">
-          {features.map((f, i) => (
-            <motion.div
-              key={f.title}
-              className="glass-card"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-            >
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                <f.icon size={24} className="text-primary" />
+        <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center pb-12">
+           <motion.div
+             key={`text-${currentSlide}`}
+             initial={{ opacity: 0, x: -30 }}
+             animate={{ opacity: 1, x: 0 }}
+             transition={{ duration: 0.8, delay: 0.3 }}
+             className="max-w-3xl"
+           >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded border border-emerald-500/30 bg-emerald-900/30 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-sm">
+                <MapPin size={12} className="text-emerald-500" />
+                {heroSlides[currentSlide].subtitle}
               </div>
-              <h3 className="text-xl font-bold mb-2">{f.title}</h3>
-              <p className="text-muted-foreground text-sm mb-5 leading-relaxed">{f.desc}</p>
-              <a
-                href={whatsappLink(f.msg)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
-              >
-                {f.btn} →
-              </a>
-            </motion.div>
+              
+              <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight mb-6 leading-[1.05] drop-shadow-xl">
+                {heroSlides[currentSlide].title}
+              </h1>
+              
+              <p className="text-xl md:text-2xl text-slate-200 font-normal max-w-2xl mb-10 leading-relaxed drop-shadow-md border-l-4 border-emerald-500 pl-6">
+                {heroSlides[currentSlide].desc}
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-5">
+                <button 
+                  onClick={() => setInquiryModal({ context: consultationContext(), title: "Speak to a Consultant", subtitle: "Tell us about your needs and our vet team will get back to you." })}
+                  className="px-8 py-4 bg-emerald-600 text-white rounded-lg font-bold text-lg hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-900/20 flex items-center justify-center gap-2"
+                >
+                  <Phone size={20} /> Speak to a Consultant
+                </button>
+                <button 
+                  onClick={() => {
+                      document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="px-8 py-4 bg-white/10 text-white border border-white/20 rounded-lg font-bold text-lg hover:bg-white/20 backdrop-blur-md transition-all flex items-center justify-center gap-2"
+                >
+                  View Product Catalog <ArrowRight size={20} />
+                </button>
+              </div>
+           </motion.div>
+        </div>
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-10 left-0 right-0 z-30 flex justify-center gap-3">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-1.5 rounded-full transition-all duration-500 ${
+                index === currentSlide ? "w-12 bg-emerald-500" : "w-3 bg-white/30 hover:bg-white/50"
+              }`}
+            />
           ))}
         </div>
       </section>
 
-      {/* Emergency Banner */}
-      <section className="container mx-auto px-4 mb-20">
-        <motion.div
-          className="gradient-emergency rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-6 text-white"
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-        >
-          <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center pulse-emergency shrink-0">
-            <AlertTriangle size={32} />
-          </div>
-          <div className="flex-1 text-center md:text-left">
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">Need Emergency Veterinary Support?</h2>
-            <p className="text-white/80">We're Here 24/7 — every second counts.</p>
-          </div>
-          <a
-            href={whatsappLink("EMERGENCY: I need immediate veterinary assistance.")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 px-8 py-3 bg-white text-emergency font-bold rounded-full hover:scale-105 transition-transform"
-          >
-            Get Help Now
-          </a>
-        </motion.div>
-      </section>
-
-      {/* Trust / Testimonials */}
-      <section className="container mx-auto px-4 mb-20">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">Trusted by Thousands</h2>
-          <p className="text-muted-foreground">Hear from livestock farmers, pet owners, and professionals.</p>
-        </motion.div>
-
-        {/* Carousel */}
-        <div className="relative max-w-2xl mx-auto mb-12">
-          <div className="glass-card text-center min-h-[180px] flex flex-col justify-center">
-            <p className="text-lg italic text-foreground/80 mb-4">"{testimonials[currentTestimonial].quote}"</p>
-            <p className="font-semibold">{testimonials[currentTestimonial].name}</p>
-            <p className="text-sm text-muted-foreground">{testimonials[currentTestimonial].role}</p>
-          </div>
-          <button
-            onClick={() => setCurrentTestimonial((p) => (p - 1 + testimonials.length) % testimonials.length)}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-9 h-9 rounded-full glass flex items-center justify-center hover:bg-muted transition-colors"
-          >
-            <ChevronLeft size={18} />
-          </button>
-          <button
-            onClick={() => setCurrentTestimonial((p) => (p + 1) % testimonials.length)}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-9 h-9 rounded-full glass flex items-center justify-center hover:bg-muted transition-colors"
-          >
-            <ChevronRight size={18} />
-          </button>
-          <div className="flex justify-center gap-2 mt-4">
-            {testimonials.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentTestimonial(i)}
-                className={`w-2 h-2 rounded-full transition-colors ${i === currentTestimonial ? "bg-primary" : "bg-muted-foreground/30"}`}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Trust icons */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-          {[
-            { icon: Clock, label: "24/7 Availability" },
-            { icon: ShieldCheck, label: "Licensed Veterinarians" },
-            { icon: Zap, label: "Fast Response" },
-          ].map(({ icon: Icon, label }) => (
-            <div key={label} className="flex flex-col items-center gap-3 glass-card text-center">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Icon size={22} className="text-primary" />
-              </div>
-              <span className="font-semibold text-sm">{label}</span>
+      {/* 2. THE PROBLEM: The Nigerian Context */}
+      <SectionWrapper background="white" className="relative overflow-hidden">
+         <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="relative order-2 md:order-1">
+               <div className="absolute -top-10 -left-10 w-40 h-40 bg-emerald-100 rounded-full blur-3xl opacity-50"></div>
+               <img 
+                 src={imgVetTraining}
+                 alt="Veterinarian Training Farmers"
+                 className="relative z-10 rounded-2xl shadow-2xl skew-y-1 transform transition-transform duration-700 hover:skew-y-0"
+               />
             </div>
-          ))}
+            
+            <div className="order-1 md:order-2">
+               <span className="text-emerald-700 font-bold uppercase tracking-wider text-sm mb-4 block">The Reality</span>
+               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+                 Your Farm Deserves <br/>
+                 <span className="text-emerald-600">The Real Deal.</span>
+               </h2>
+               <div className="space-y-6 text-lg text-slate-700 leading-relaxed font-light">
+                 <p>
+                   We know the struggle. You spend thousands on medication, yet your birds are still dropping, or your cattle aren't gaining weight.
+                 </p>
+                 <p>
+                   <strong>The Market Problem:</strong> Our industry is flooded with diluted drugs, fake imports, and products not designed for our harsh tropical environment. Using them isn't just a waste of money—it risks your entire flock and future.
+                 </p>
+                 <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg">
+                    <p className="font-bold text-red-800 mb-1 flex items-center gap-2">
+                       <AlertTriangle size={18} /> don't Gamble with Health
+                    </p>
+                    <p className="text-red-700 text-sm">
+                       Every day you use unverified products, you risk disease outbreaks that can wipe out months of hard work.
+                    </p>
+                 </div>
+               </div>
+            </div>
+         </div>
+         
+         <BrandSolutions />
+      </SectionWrapper>
+
+      {/* 3. THE EXPERIENCE: Why Choose Us */}
+      <ExperienceSection />
+
+      {/* 4. THE PRODUCT ECOSYSTEM: Bento Grid Refined */}
+      <section id="products-section" className="py-24 px-4 bg-white">
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+             <div className="max-w-2xl">
+                <span className="text-emerald-600 font-bold uppercase tracking-wider text-sm mb-2 block">Our Solutions</span>
+                <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                   Essential Veterinary Tools
+                </h2>
+                <p className="text-lg text-slate-600">
+                   Proprietary formulations aimed at maximum productivity and disease control.
+                </p>
+             </div>
+             <button 
+                onClick={() => setInquiryModal({ context: productContext("Product Price List", "All"), title: "Request Price List", subtitle: "Fill in your details and we'll send you our complete price list." })}
+                className="group flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-slate-800 transition-colors shadow-xl"
+             >
+                Request Price List <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+             </button>
+          </div>
+
+          <BentoGrid>
+             {/* Key Highlight: Maxiyield */}
+             <BentoCard
+               title="Maxiyield Premium"
+               subtitle="The Ultimate Growth Promoter"
+               description="A powerful blend of amino acids and vitamins designed to boost weight gain in broilers and recovery in stressed livestock."
+               image={imgMaxiyield}
+               className="lg:col-span-2 lg:row-span-2 bg-gradient-to-br from-emerald-900 to-slate-900"
+               onClick={() => setInquiryModal({ context: productContext("Maxiyield Premium", "Nutrition") })}
+             />
+
+             {/* Categories */}
+             <BentoCard
+               title="Preventive Care"
+               subtitle="Vaccines & Prophylaxis"
+               description="Protect your farm before disease strikes."
+               icon={ShieldCheck}
+               className="lg:col-span-1 lg:row-span-1 bg-emerald-700 text-white"
+               onClick={() => setInquiryModal({ context: productContext("Preventive Medicines", "Vet Supplies"), title: "Preventive Care Inquiry" })}
+             />
+             
+             <BentoCard
+               title="Poultry Solutions"
+               subtitle="Coccidiosis & CRD"
+               description="Specialized treatments for common poultry infections."
+               icon={Beef} // You might want a feather/bird icon here if available
+               className="lg:col-span-1 lg:row-span-1 bg-amber-600 text-white"
+               onClick={() => setInquiryModal({ context: productContext("Poultry Solutions", "Livestock"), title: "Poultry Solutions Inquiry" })}
+             />
+
+             {/* Featured Products */}
+             <BentoCard
+               title="Viramax Concentrate"
+               subtitle="Heavy Duty Disinfectant"
+               image={imgViramax150}
+               className="lg:col-span-1 lg:row-span-1 bg-blue-700"
+               onClick={() => setInquiryModal({ context: productContext("Viramax Concentrate", "Livestock") })}
+             />
+
+             <BentoCard
+               title="Consult Our Vet"
+               subtitle="Direct WhatsApp Support"
+               description="Get dosage advice and diagnosis assistance."
+               icon={Phone}
+               className="lg:col-span-1 lg:row-span-1 bg-slate-100 text-slate-900"
+               onClick={() => setInquiryModal({ context: consultationContext(), title: "Consult Our Vet", subtitle: "Get dosage advice and diagnosis assistance from our experts." })}
+             />
+          </BentoGrid>
         </div>
       </section>
+
+{/* 5. PRODUCT SCROLL: "The Collection" - Replaced by Smart Explorer */}
+      <SmartProductExplorer 
+        products={products} 
+        onInquiry={(p) => setInquiryModal({ context: productContext(p.name, p.category) })} 
+        onEmergency={() => setInquiryModal({ context: emergencyContext(), title: "Emergency Response", subtitle: "We detected an urgent query. Our vet team is on standby." })}
+      />
+
+
+
+      {/* 7. PROOF & IMPACT: Storytelling */}
+      <ImpactShowcase />
+
+      <SectionWrapper background="white" className="pb-0">
+          <BrandedStatsCTA onInquiry={(type) => {
+            if (type === 'partnership') {
+                setInquiryModal({ context: partnershipContext() });
+            } else if (type === 'product_order') {
+                setInquiryModal({ context: productContext("General Order", "All") });
+            } else {
+                setInquiryModal({ context: generalContactContext() });
+            }
+          }} />
+      </SectionWrapper>
+
+      {/* Intelligent Inquiry Modal */}
+      {inquiryModal && (
+        <InquiryFormModal
+          isOpen={!!inquiryModal}
+          onClose={() => setInquiryModal(null)}
+          context={inquiryModal.context}
+          title={inquiryModal.title}
+          subtitle={inquiryModal.subtitle}
+        />
+      )}
+
     </div>
   );
 };
