@@ -18,6 +18,7 @@ const FloatingWhatsApp = () => {
       }
     }, 5000);
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array means this runs once on mount. 'hasHovered' inside timeout will be stale (false), which is acceptable for this simple logic.
 
   return (

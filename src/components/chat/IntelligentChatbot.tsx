@@ -90,6 +90,7 @@ const IntelligentChatbot = () => {
       }
     }, 5000);
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Initialize chat with context-aware greeting
@@ -105,7 +106,7 @@ const IntelligentChatbot = () => {
         }
       ]);
     }
-  }, [isOpen, location.pathname]);
+  }, [isOpen, location.pathname, messages.length]);
 
   // Scroll to bottom of chat
   useEffect(() => {
