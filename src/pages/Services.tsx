@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { AlertTriangle, Stethoscope, Truck, Tractor, MessageCircle, ArrowRight, ShieldCheck, Users, Zap, Send } from "lucide-react";
 import InquiryFormModal from "@/components/InquiryFormModal";
+import { DosageCalculator } from "@/components/tools/DosageCalculator";
 import { serviceContext, consultationContext, partnershipContext } from "@/lib/inquiry";
 import type { PageContext } from "@/lib/inquiry";
 
@@ -146,6 +147,19 @@ const ServicesPage = () => {
           ))}
         </motion.div>
       </div>
+
+      {/* Smart Tools Section */}
+      <section className="container mx-auto px-6 py-24 relative">
+         <div className="mb-16 text-center">
+            <span className="text-emerald-400 font-bold uppercase tracking-widest text-xs mb-4 block">Self-Service Tools</span>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-6">Smart Application Tools</h2>
+            <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+               Use our digital tools to calculate precise dosages and manage your farm's health metrics independently.
+            </p>
+         </div>
+         
+         <DosageCalculator />
+      </section>
 
       {/* Services Gallery */}
       <section className="container mx-auto px-6 pb-32 relative">

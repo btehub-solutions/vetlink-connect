@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { AlertTriangle, Phone, ShieldCheck, Clock } from "lucide-react";
 import EmergencyForm from "@/components/EmergencyForm";
+import { SymptomTriage } from "@/components/tools/SymptomTriage";
 
 const EmergencyPage = () => (
   <div className="bg-slate-950 min-h-screen flex flex-col items-center justify-center relative overflow-hidden py-16">
@@ -86,8 +87,25 @@ const EmergencyPage = () => (
         </div>
       </motion.div>
 
+      {/* ── Triage Section ── */}
+      <div className="w-full max-w-4xl mx-auto mb-20">
+         <div className="text-center mb-8">
+            <span className="text-orange-400 font-bold uppercase tracking-widest text-xs mb-2 block">AI Assistant</span>
+            <h2 className="text-2xl font-bold text-white">Not sure if it's an emergency?</h2>
+            <p className="text-slate-400">Use our AI triage tool to assess the situation.</p>
+         </div>
+         <SymptomTriage 
+            onEmergency={() => {
+                const formElement = document.getElementById('emergency-form');
+                formElement?.scrollIntoView({ behavior: 'smooth' });
+            }} 
+         />
+      </div>
+
       {/* ── Embedded Emergency Form ── */}
-      <EmergencyForm />
+      <div id="emergency-form">
+        <EmergencyForm />
+      </div>
     </div>
   </div>
 );
