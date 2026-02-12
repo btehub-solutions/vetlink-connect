@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MessageCircle, Clock, Facebook, Instagram, Twitter, ArrowUpRight, Heart, Send } from "lucide-react";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import logo from "@/assets/logo.png";
 import InquiryFormModal from "@/components/InquiryFormModal";
 import { generalContactContext } from "@/lib/inquiry";
@@ -20,7 +20,7 @@ const socialLinks = [
   { Icon: Twitter, href: "#", label: "Twitter", color: "hover:bg-[#1DA1F2]" },
 ];
 
-const containerVariants: Variants = {
+const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -28,7 +28,7 @@ const containerVariants: Variants = {
   },
 };
 
-const itemVariants: Variants = {
+const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
