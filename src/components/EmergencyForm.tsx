@@ -164,7 +164,7 @@ export default function EmergencyForm() {
             <select {...register("animalType")} className={selectClass}>
               <option value="" className="bg-slate-900">Select...</option>
               {animalTypeOptions.map((opt) => (
-                <option key={opt.value} value={opt.label} className="bg-slate-900">
+                <option key={opt.value} value={opt.value} className="bg-slate-900">
                   {opt.label}
                 </option>
               ))}

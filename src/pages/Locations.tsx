@@ -1,28 +1,34 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Phone, MessageCircle, ArrowRight, Navigation, Send } from "lucide-react";
+import { MapPin, Clock, Phone, MessageCircle, ArrowRight, Navigation, Send, ExternalLink } from "lucide-react";
 import InquiryFormModal from "@/components/InquiryFormModal";
 import { generalContactContext } from "@/lib/inquiry";
 import type { PageContext } from "@/lib/inquiry";
 
 const locations = [
   {
-    name: "Main Veterinary Center",
-    address: "123 Veterinary Road, Lagos, Nigeria",
+    name: "Warehouse",
+    address: "Oyediji Building, Opposite Sky Bank, Monatan, Ibadan, Oyo State, Nigeria",
     hours: "Open 24/7",
     phone: "+234 813 697 2328",
-    waMsg: "Hello, I'd like to reach your Main Veterinary Center in Lagos.",
+    waMsg: "Hello, I'd like to reach your Warehouse in Monatan, Ibadan.",
     gradient: "from-emerald-800 to-emerald-900",
-    badge: "Headquarters",
+    badge: "Warehouse",
+    lat: 7.3590,
+    lng: 3.8510,
+    mapQuery: "Oyediji+Building+Monatan+Ibadan+Oyo+State+Nigeria",
   },
   {
-    name: "Northern Branch",
-    address: "456 Animal Care Street, Abuja, Nigeria",
+    name: "Factory",
+    address: "No. 6, Ikoyi-Ile, Osun State, Nigeria",
     hours: "Open 24/7",
     phone: "+234 813 697 2328",
-    waMsg: "Hello, I'd like to reach your Northern Branch in Abuja.",
+    waMsg: "Hello, I'd like to reach your Factory in Ikoyi-Ile, Osun State.",
     gradient: "from-blue-800 to-blue-900",
-    badge: "Branch Office",
+    badge: "Factory",
+    lat: 7.6506,
+    lng: 4.2978,
+    mapQuery: "Ikoyi-Ile+Osun+State+Nigeria",
   },
 ];
 
@@ -83,57 +89,118 @@ const LocationsPage = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.15, duration: 0.7 }}
-            className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${loc.gradient} border border-white/10 shadow-2xl group`}
+            className="flex flex-col gap-6"
           >
-            {/* Decorative Elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3" />
-            <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/5 rounded-full blur-2xl -translate-x-1/3 translate-y-1/3" />
+            {/* Location Card */}
+            <div className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${loc.gradient} border border-white/10 shadow-2xl group`}>
+              {/* Decorative Elements */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3" />
+              <div className="absolute bottom-0 left-0 w-40 h-40 bg-white/5 rounded-full blur-2xl -translate-x-1/3 translate-y-1/3" />
 
-            <div className="relative z-10 p-8 md:p-10">
-              {/* Badge */}
-              <div className="flex items-center gap-2 mb-6">
-                <span className="px-3 py-1.5 bg-white/10 backdrop-blur-sm text-white text-[10px] font-bold rounded-full uppercase tracking-wider border border-white/10">
-                  {loc.badge}
-                </span>
-                <span className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold rounded-full border border-emerald-500/20">
-                  <Clock size={10} className="animate-pulse" /> 24/7
-                </span>
+              <div className="relative z-10 p-8 md:p-10">
+                {/* Badge */}
+                <div className="flex items-center gap-2 mb-6">
+                  <span className="px-3 py-1.5 bg-white/10 backdrop-blur-sm text-white text-[10px] font-bold rounded-full uppercase tracking-wider border border-white/10">
+                    {loc.badge}
+                  </span>
+                  <span className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold rounded-full border border-emerald-500/20">
+                    <Clock size={10} className="animate-pulse" /> 24/7
+                  </span>
+                </div>
+
+                {/* Icon */}
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  className="w-20 h-20 rounded-3xl bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/10 shadow-2xl mb-6"
+                >
+                  <MapPin size={36} className="text-white" />
+                </motion.div>
+
+                {/* Details */}
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">{loc.name}</h3>
+
+                <div className="space-y-3 mb-8">
+                  <div className="flex items-center gap-3 text-white/60">
+                    <MapPin size={16} className="flex-shrink-0 text-white/40" />
+                    <span className="text-sm">{loc.address}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-white/60">
+                    <Clock size={16} className="flex-shrink-0 text-white/40" />
+                    <span className="text-sm">{loc.hours}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-white/80">
+                    <Phone size={16} className="flex-shrink-0 text-white/40" />
+                    <span className="text-sm font-bold">{loc.phone}</span>
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <button
+                  onClick={() => openInquiry(loc.name)}
+                  className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-white text-slate-900 rounded-xl font-bold hover:bg-opacity-90 transition-all duration-300 hover:scale-[1.02] shadow-xl"
+                >
+                  <Send size={18} /> Contact This Location <ArrowRight size={16} />
+                </button>
               </div>
-
-              {/* Icon */}
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="w-20 h-20 rounded-3xl bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/10 shadow-2xl mb-6"
-              >
-                <MapPin size={36} className="text-white" />
-              </motion.div>
-
-              {/* Details */}
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">{loc.name}</h3>
-
-              <div className="space-y-3 mb-8">
-                <div className="flex items-center gap-3 text-white/60">
-                  <MapPin size={16} className="flex-shrink-0 text-white/40" />
-                  <span className="text-sm">{loc.address}</span>
-                </div>
-                <div className="flex items-center gap-3 text-white/60">
-                  <Clock size={16} className="flex-shrink-0 text-white/40" />
-                  <span className="text-sm">{loc.hours}</span>
-                </div>
-                <div className="flex items-center gap-3 text-white/80">
-                  <Phone size={16} className="flex-shrink-0 text-white/40" />
-                  <span className="text-sm font-bold">{loc.phone}</span>
-                </div>
-              </div>
-
-              {/* CTA */}
-              <button
-                onClick={() => openInquiry(loc.name)}
-                className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-white text-slate-900 rounded-xl font-bold hover:bg-opacity-90 transition-all duration-300 hover:scale-[1.02] shadow-xl"
-              >
-                <Send size={18} /> Contact This Location <ArrowRight size={16} />
-              </button>
             </div>
+
+            {/* Map Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.15 + 0.3, duration: 0.7 }}
+              className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl bg-slate-900/60 backdrop-blur-sm"
+            >
+              {/* Map Header */}
+              <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 bg-slate-900/80">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-xs font-semibold text-white/70 uppercase tracking-wider">
+                    {loc.name} — Directions
+                  </span>
+                </div>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${loc.mapQuery}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 text-xs font-bold transition-colors"
+                >
+                  Open in Google Maps <ExternalLink size={12} />
+                </a>
+              </div>
+
+              {/* Map Embed */}
+              <div className="relative w-full" style={{ height: "260px" }}>
+                <iframe
+                  title={`Map - ${loc.name}`}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  src={`https://www.google.com/maps?q=${loc.lat},${loc.lng}&z=15&output=embed`}
+                  allowFullScreen
+                />
+              </div>
+
+              {/* Get Directions Button */}
+              <div className="p-4 bg-slate-900/80 border-t border-white/10">
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] shadow-lg bg-gradient-to-r ${
+                    loc.name === "Warehouse"
+                      ? "from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600"
+                      : "from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600"
+                  } text-white`}
+                >
+                  <Navigation size={16} />
+                  Get Directions
+                  <ArrowRight size={14} />
+                </a>
+              </div>
+            </motion.div>
           </motion.div>
         ))}
       </div>

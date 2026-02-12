@@ -84,13 +84,14 @@ export type PartnershipData = z.infer<typeof partnershipSchema>;
 export type GeneralContactData = z.infer<typeof generalContactSchema>;
 
 // ── Animal Types Options ───────────────────────────────────────────
-export const animalTypeOptions: { value: AnimalType; label: string }[] = [
-  { value: "poultry", label: "🐔 Poultry (Chicken, Turkey, etc.)" },
-  { value: "cattle", label: "🐄 Cattle" },
-  { value: "goats_sheep", label: "🐐 Goats & Sheep" },
-  { value: "dogs_cats", label: "🐕 Dogs & Cats" },
-  { value: "fish", label: "🐟 Fish / Aquaculture" },
-  { value: "other", label: "🐾 Other" },
+// Note: values are plain text (used in WhatsApp messages), labels have emojis (for UI display)
+export const animalTypeOptions: { value: string; label: string; displayValue: string }[] = [
+  { value: "poultry", label: "🐔 Poultry (Chicken, Turkey, etc.)", displayValue: "Poultry (Chicken, Turkey, etc.)" },
+  { value: "cattle", label: "🐄 Cattle", displayValue: "Cattle" },
+  { value: "goats_sheep", label: "🐐 Goats & Sheep", displayValue: "Goats & Sheep" },
+  { value: "dogs_cats", label: "🐕 Dogs & Cats", displayValue: "Dogs & Cats" },
+  { value: "fish", label: "🐟 Fish / Aquaculture", displayValue: "Fish / Aquaculture" },
+  { value: "other", label: "🐾 Other", displayValue: "Other" },
 ];
 
 export const consultationTopics = [
@@ -114,6 +115,12 @@ export const businessTypes = [
   "Wholesaler / Distributor",
   "Other",
 ];
+
+// ── Helper to get display value for animal type ────────────────────
+export function getAnimalTypeDisplay(value: string): string {
+  const option = animalTypeOptions.find(opt => opt.value === value);
+  return option ? option.displayValue : value;
+}
 
 // ── Context-Aware WhatsApp Message Builder ─────────────────────────
 export function buildWhatsAppMessage(
@@ -139,7 +146,7 @@ export function buildWhatsAppMessage(
         `*Name:* ${formData.fullName}`,
         `*Phone:* ${formData.phone}`,
         `*Location:* ${formData.location}`,
-        `*Animal Type:* ${formData.animalType}`,
+        `*Animal Type:* ${getAnimalTypeDisplay(formData.animalType as string)}`,
         formData.quantity ? `*Quantity Needed:* ${formData.quantity}` : "",
         formData.message ? `*Additional Info:* ${formData.message}` : "",
       ]
@@ -155,7 +162,7 @@ export function buildWhatsAppMessage(
         `*Name:* ${formData.fullName}`,
         `*Phone:* ${formData.phone}`,
         `*Location:* ${formData.location}`,
-        `*Animal Type:* ${formData.animalType}`,
+        `*Animal Type:* ${getAnimalTypeDisplay(formData.animalType as string)}`,
         formData.numberOfAnimals
           ? `*Number of Animals:* ${formData.numberOfAnimals}`
           : "",
@@ -173,7 +180,7 @@ export function buildWhatsAppMessage(
         `*Name:* ${formData.fullName}`,
         `*Phone:* ${formData.phone}`,
         `*Location:* ${formData.location}`,
-        `*Animal Type:* ${formData.animalType}`,
+        `*Animal Type:* ${getAnimalTypeDisplay(formData.animalType as string)}`,
         formData.numberOfAffected
           ? `*Animals Affected:* ${formData.numberOfAffected}`
           : "",
@@ -191,7 +198,7 @@ export function buildWhatsAppMessage(
         `*Name:* ${formData.fullName}`,
         `*Phone:* ${formData.phone}`,
         `*Location:* ${formData.location}`,
-        `*Animal Type:* ${formData.animalType}`,
+        `*Animal Type:* ${getAnimalTypeDisplay(formData.animalType as string)}`,
         formData.preferredTime
           ? `*Preferred Time:* ${formData.preferredTime}`
           : "",
@@ -240,7 +247,8 @@ export function buildWhatsAppMessage(
   ].join("\n");
 
   const fullMessage = `${header}\n\n${body}\n\n${footer}`;
-  return `https://wa.me/${PHONE}?text=${encodeURIComponent(fullMessage)}`;
+  // Use api.whatsapp.com for more reliable deep linking on mobile and web
+  return `https://api.whatsapp.com/send?phone=${PHONE}&text=${encodeURIComponent(fullMessage)}`;
 }
 
 // ── Quick context builders for common use cases ────────────────────

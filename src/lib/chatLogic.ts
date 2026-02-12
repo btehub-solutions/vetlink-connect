@@ -304,13 +304,13 @@ const KNOWLEDGE_RESPONSES: KnowledgeResponse[] = [
   {
     intent: 'ordering',
     responses: [
-      { text: "🛒 **How to Order from Divine Agvet:**\n\n1️⃣ Browse our products on this website\n2️⃣ Click \"Inquire\" on any product\n3️⃣ Fill the short form with your details\n4️⃣ We'll prepare your order and contact you\n\n🚚 **Delivery Times:**\n• Lagos & Abuja: 24-48 hours\n• Other states: 3-5 business days\n• Express delivery available for emergencies\n\n💳 **Payment:** Bank transfer, mobile money, or pay-on-delivery (Lagos/Abuja)\n\nWhat products would you like to order?", link: '/products', linkText: "Browse & Order Products" }
+      { text: "🛒 **How to Order from Divine Agvet:**\n\n1️⃣ Browse our products on this website\n2️⃣ Click \"Inquire\" on any product\n3️⃣ Fill the short form with your details\n4️⃣ We'll prepare your order and contact you\n\n🚚 **Delivery Times:**\n• Ibadan & Osun State: 24-48 hours\n• Other states: 3-5 business days\n• Express delivery available for emergencies\n\n💳 **Payment:** Bank transfer, mobile money, or pay-on-delivery\n\nWhat products would you like to order?", link: '/products', linkText: "Browse & Order Products" }
     ]
   },
   {
     intent: 'location',
     responses: [
-      { text: "📍 **Find Us:**\n\n🏢 **Headquarters:** Lagos, Nigeria\n• Open 24/7\n• Full product showroom available\n\n🏢 **Abuja Branch:**\n• Open 24/7\n• Serving FCT and Northern Nigeria\n\n🗺️ **Coverage:** Technical representatives in 12+ states across Nigeria.\n\nWe also deliver nationwide — so even if we don't have a branch near you, we can get products to your doorstep!\n\nWant directions to the nearest branch?", link: '/locations', linkText: "View Locations & Directions" }
+      { text: "📍 **Find Us:**\n\n🏢 **Warehouse:** Oyediji Building, Opposite Sky Bank, Monatan, Ibadan, Oyo State, Nigeria\n• Open 24/7\n• Full product showroom available\n\n🏢 **Factory:** No. 6, Ikoyi-Ile, Osun State, Nigeria\n• Open 24/7\n• Manufacturing and distribution center\n\n🗺️ **Coverage:** Technical representatives in 12+ states across Nigeria.\n\nWe also deliver nationwide — so even if you're not near our facilities, we can get products to your doorstep!\n\nWant directions to our locations?", link: '/locations', linkText: "View Locations & Directions" }
     ]
   },
   {
@@ -412,7 +412,7 @@ const KNOWLEDGE_RESPONSES: KnowledgeResponse[] = [
   {
     intent: 'contact',
     responses: [
-      { text: "📞 **Contact Divine Agvet:**\n\n📱 **WhatsApp/Call:** +234 813 697 2328\n⏰ **Available:** 24/7 — Even holidays!\n🏢 **Offices:** Lagos (HQ) & Abuja\n\n💬 **Fastest Way:** Click below to start a WhatsApp conversation with our team. We'll respond in under 5 minutes!\n\nOr feel free to keep chatting with me — I can help with most questions right here!", link: 'https://wa.me/2348136972328', linkText: "Chat on WhatsApp" }
+      { text: "📞 **Contact Divine Agvet:**\n\n📱 **WhatsApp/Call:** +234 813 697 2328\n⏰ **Available:** 24/7 — Even holidays!\n🏢 **Locations:** Warehouse (Monatan, Ibadan) & Factory (Ikoyi-Ile, Osun State)\n\n💬 **Fastest Way:** Click below to start a WhatsApp conversation with our team. We'll respond in under 5 minutes!\n\nOr feel free to keep chatting with me — I can help with most questions right here!", link: 'https://wa.me/2348136972328', linkText: "Chat on WhatsApp" }
     ]
   },
   {
