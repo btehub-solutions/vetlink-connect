@@ -8,15 +8,15 @@ import type { PageContext } from "@/lib/inquiry";
 const locations = [
   {
     name: "Warehouse",
-    address: "Oyediji Building, Opposite Sky Bank, Monatan, Ibadan, Oyo State, Nigeria",
+    address: "Oyediji Building, Opposite Sky Bank, Monatan, Iwo Road, Ibadan, Oyo State, Nigeria",
     hours: "Open 24/7",
     phone: "+234 813 697 2328",
-    waMsg: "Hello, I'd like to reach your Warehouse in Monatan, Ibadan.",
+    waMsg: "Hello, I'd like to reach your Warehouse in Monatan, Iwo Road, Ibadan.",
     gradient: "from-emerald-800 to-emerald-900",
     badge: "Warehouse",
-    lat: 7.3590,
-    lng: 3.8510,
-    mapQuery: "Oyediji+Building+Monatan+Ibadan+Oyo+State+Nigeria",
+    lat: 7.4028489,
+    lng: 3.9391435,
+    mapQuery: "Oyediji+Building+Opposite+Sky+Bank+Monatan+Iwo+Road+Ibadan+Oyo+State+Nigeria",
   },
   {
     name: "Factory",

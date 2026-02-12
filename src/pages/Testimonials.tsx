@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Star, Quote, ChevronLeft, ChevronRight, Users } from "lucide-react";
 
 const testimonials = [
-  { quote: "Outstanding emergency service! They responded within minutes when my cattle needed urgent care. Truly professional and caring team.", name: "Adewale Johnson", role: "Livestock Farmer, Ogun State", rating: 5 },
+  { quote: "Outstanding emergency service! They responded within minutes when my cattle needed urgent care. Truly professional and caring team.", name: "Adewale Johnson", role: "Livestock Farmer, Osun State", rating: 5 },
   { quote: "My dog was seriously ill and they guided me through WhatsApp at 2 AM. The care and expertise saved his life. Forever grateful!", name: "Sarah Okonkwo", role: "Pet Owner, Lagos", rating: 5 },
   { quote: "Reliable supplier of quality veterinary products. Their WhatsApp ordering system is so convenient for my practice.", name: "Dr. Ibrahim Musa", role: "Veterinarian, Kano", rating: 5 },
   { quote: "Fast delivery and genuine products. They understand the urgency of veterinary supply needs.", name: "Grace Eze", role: "Vet Clinic Owner, Enugu", rating: 5 },

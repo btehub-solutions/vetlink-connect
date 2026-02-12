@@ -48,7 +48,7 @@ const values = [
 ];
 
 const milestones = [
-  { year: "2008", event: "Divine Agvet Limited founded in Ogun State, Nigeria" },
+  { year: "2008", event: "Divine Agvet Limited founded in Osun State, Nigeria" },
   { year: "2012", event: "Expanded product line to over 50 veterinary formulations" },
   { year: "2016", event: "Reached 1,000+ active farmers across 6 states" },
   { year: "2020", event: "Launched digital WhatsApp ordering system nationwide" },
@@ -81,7 +81,7 @@ const AboutUsPage = () => {
             transition={{ delay: 0.2 }}
             className="inline-block px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6"
           >
-            <ShieldCheck size={12} className="inline mr-1.5 -mt-0.5" /> Est. 2008 · Ogun State, Nigeria
+            <ShieldCheck size={12} className="inline mr-1.5 -mt-0.5" /> Est. 2008 · Osun State, Nigeria
           </motion.span>
           <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight mb-6 leading-[1.05]">
             About{" "}
@@ -165,7 +165,7 @@ const AboutUsPage = () => {
               Divine Agvet Limited was founded with a single mission: to provide Nigerian farmers with veterinary products that actually work in our unique tropical environment.
             </p>
             <p>
-              For over 17 years, we've been manufacturing NAFDAC-approved veterinary drugs, feed additives, and animal health products right here in Ogun State. We understand the challenges our farmers face — from fake imports to products not designed for our climate.
+              For over 17 years, we've been manufacturing NAFDAC-approved veterinary drugs, feed additives, and animal health products right here in Osun State. We understand the challenges our farmers face — from fake imports to products not designed for our climate.
             </p>
             <p>
               Today, we serve over 2,500 farmers across 12 states with more than 150 product formulations, backed by a team of qualified veterinary professionals providing 24/7 support.

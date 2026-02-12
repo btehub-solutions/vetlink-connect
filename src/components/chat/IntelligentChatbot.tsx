@@ -18,7 +18,9 @@ import {
   RefreshCw
 } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
-import { generateResponse, getInitialGreeting } from "@/lib/chatLogic";
+import { generateResponse, getInitialGreeting, DiagnosticCardData, LeadGenFormData } from "@/lib/chatLogic";
+import { DiagnosticCard } from "./DiagnosticCard";
+import { LeadGenForm } from "./LeadGenForm";
 
 interface ChatMessage {
   id: string;
@@ -27,6 +29,9 @@ interface ChatMessage {
   timestamp: Date;
   link?: string;
   linkText?: string;
+  card?: DiagnosticCardData;
+  form?: LeadGenFormData;
+  isEmergency?: boolean;
 }
 
 // Simple markdown parser for chat messages
@@ -77,6 +82,7 @@ const IntelligentChatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [hasHovered, setHasHovered] = useState(false);
+  const [isEmergencyMode, setIsEmergencyMode] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
@@ -139,8 +145,19 @@ const IntelligentChatbot = () => {
         sender: 'bot',
         timestamp: new Date(),
         link: response.link,
-        linkText: response.linkText
+        linkText: response.linkText,
+        card: response.card,
+        form: response.form,
+        isEmergency: response.isEmergency
       };
+      
+      if (response.isEmergency) {
+          setIsEmergencyMode(true);
+      } else if (isEmergencyMode && !response.isEmergency) {
+          // Optional: Reset emergency mode if subsequent messages are normal? 
+          // For now, let's keep it sticky until reset or explicit exit usually, but here we can relax it.
+          // setIsEmergencyMode(false); 
+      }
       
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
@@ -156,6 +173,7 @@ const IntelligentChatbot = () => {
 
   const handleReset = () => {
     setMessages([]);
+    setIsEmergencyMode(false);
     const initialGreeting = getInitialGreeting({ page: location.pathname });
     setMessages([
         {
@@ -184,19 +202,19 @@ const IntelligentChatbot = () => {
             className="w-[350px] md:w-[420px] h-[600px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-white/20 dark:border-slate-700/50 rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden mb-4"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 p-5 flex items-center justify-between text-white shadow-xl relative overflow-hidden">
+            <div className={`p-5 flex items-center justify-between text-white shadow-xl relative overflow-hidden transition-all duration-500 ${isEmergencyMode ? 'bg-gradient-to-r from-red-600 to-orange-600 animate-pulse' : 'bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500'}`}>
               <div className="absolute inset-0 bg-white/10 pattern-grid-lg opacity-10" />
               <div className="flex items-center gap-4 relative z-10">
                 <div className="relative">
-                  <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center border border-white/30 backdrop-blur-sm shadow-inner group">
-                    <Bot size={28} className="group-hover:rotate-12 transition-transform" />
+                  <div className={`w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center border border-white/30 backdrop-blur-sm shadow-inner group ${isEmergencyMode ? 'animate-bounce' : ''}`}>
+                    {isEmergencyMode ? <HelpCircle size={28} className="text-white" /> : <Bot size={28} className="group-hover:rotate-12 transition-transform" />}
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-emerald-600 animate-pulse shadow-sm" />
+                  <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white/50 shadow-sm ${isEmergencyMode ? 'bg-red-400 animate-ping' : 'bg-green-400 animate-pulse'}`} />
                 </div>
                 <div>
-                  <h3 className="font-black text-xl tracking-tight">Agvet AI</h3>
-                  <p className="text-[10px] text-emerald-100 uppercase font-black tracking-widest flex items-center gap-1 opacity-80">
-                    <Sparkles size={10} className="animate-pulse" /> Intelligent Hub
+                  <h3 className="font-black text-xl tracking-tight">{isEmergencyMode ? 'EMERGENCY MODE' : 'Agvet AI'}</h3>
+                  <p className="text-[10px] text-white/90 uppercase font-black tracking-widest flex items-center gap-1 opacity-80">
+                    <Sparkles size={10} className="animate-pulse" /> {isEmergencyMode ? 'Priority Support' : 'Intelligent Hub'}
                   </p>
                 </div>
               </div>
@@ -274,6 +292,9 @@ const IntelligentChatbot = () => {
                       </div>
                     )}
 
+                    {msg.card && <DiagnosticCard data={msg.card} />}
+                    {msg.form && <LeadGenForm data={msg.form} />}
+
                     <div className={`text-[9px] mt-2 font-bold uppercase tracking-widest opacity-40 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
                       {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
@@ -287,10 +308,12 @@ const IntelligentChatbot = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   className="flex justify-start"
                 >
-                  <div className="bg-white dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 px-5 py-4 rounded-3xl rounded-tl-none shadow-sm flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-bounce delay-0" />
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-bounce delay-150" />
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-bounce delay-300" />
+                  <div className="bg-white dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 px-4 py-3 rounded-3xl rounded-tl-none shadow-sm flex items-center gap-3">
+                    <div className="relative w-6 h-6 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-emerald-400/30 rounded-full animate-ping"></div>
+                        <Bot size={16} className="text-emerald-500 relative z-10" />
+                    </div>
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-widest animate-pulse">Thinking...</span>
                   </div>
                 </motion.div>
               )}

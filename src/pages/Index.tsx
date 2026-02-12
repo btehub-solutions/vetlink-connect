@@ -43,7 +43,7 @@ import imgVetTraining from "@/assets/generated/vet-training.jpg";
 const heroSlides = [
   {
     title: "Homegrown Solutions for Nigerian Farms",
-    subtitle: "Proudly Manufactured in Ogun State",
+    subtitle: "Proudly Manufactured in Osun State",
     image: imgLivestockHero, // African cattle context
     desc: "We understand the unique challenges of our tropical climate. That's why we formulate veterinary products that actually work here."
   },

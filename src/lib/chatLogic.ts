@@ -7,6 +7,27 @@ export interface ChatMessage {
   isError?: boolean;
   link?: string;
   linkText?: string;
+  card?: DiagnosticCardData;
+  form?: LeadGenFormData;
+  isEmergency?: boolean;
+}
+
+export interface DiagnosticCardData {
+  type: 'diagnostic';
+  title: string;
+  symptom: string;
+  probableCause: string;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  confidence: number;
+  recommendations: Array<{ product: string; action: string }>;
+}
+
+export interface LeadGenFormData {
+  type: 'lead_capture';
+  title: string;
+  fields: Array<{ name: string; label: string; type: 'text' | 'tel' | 'select'; options?: string[] }>;
+  submitLabel: string;
+  context: string;
 }
 
 export interface ChatContext {
@@ -243,7 +264,7 @@ const KNOWLEDGE_RESPONSES: KnowledgeResponse[] = [
   {
     intent: 'about_company',
     responses: [
-      { text: "🏭 **Divine Agvet Limited** — Founded in 2008 in Ogun State, Nigeria.\n\n📌 What we do:\n• Manufacture NAFDAC-approved veterinary products\n• Deliver directly to farms across 12+ states\n• Provide 24/7 veterinary consultation\n\n📊 Our impact:\n• 2,500+ farmers supported\n• 17+ years of trusted expertise\n• Under 5-minute average response time\n\nWe started with a single mission: *bring authentic, affordable vet medicines to Nigerian farmers* — cutting out the middlemen and fake products.", link: '/about', linkText: "Read Our Full Story" }
+      { text: "🏭 **Divine Agvet Limited** — Founded in 2008 in Osun State, Nigeria.\n\n📌 What we do:\n• Manufacture NAFDAC-approved veterinary products\n• Deliver directly to farms across 12+ states\n• Provide 24/7 veterinary consultation\n\n📊 Our impact:\n• 2,500+ farmers supported\n• 17+ years of trusted expertise\n• Under 5-minute average response time\n\nWe started with a single mission: *bring authentic, affordable vet medicines to Nigerian farmers* — cutting out the middlemen and fake products.", link: '/about', linkText: "Read Our Full Story" }
     ]
   },
   {
@@ -567,7 +588,7 @@ function buildContextualResponse(
   message: string,
   intent: string,
   context: ChatContext
-): { text: string; link?: string; linkText?: string } {
+): { text: string; link?: string; linkText?: string; card?: DiagnosticCardData; form?: LeadGenFormData; isEmergency?: boolean } {
   
   // Extract entities from this message
   const animals = extractAnimals(message);
@@ -585,6 +606,29 @@ function buildContextualResponse(
     conversationState.lastIntent = intent;
     if (!conversationState.topicsDiscussed.includes(intent)) {
       conversationState.topicsDiscussed.push(intent);
+    }
+  }
+
+  // SALES TRAP: If user shows high buying intent (Price/Ordering/Bulk), trigger Lead Gen Form
+  if (['pricing', 'ordering', 'partnership', 'product_viramax', 'product_maxitet'].includes(intent) && conversationState.messageCount > 1) {
+    // 30% chance or if specific high-intent keywords
+    const isHighIntent = message.toLowerCase().includes('how much') || message.toLowerCase().includes('buy') || message.toLowerCase().includes('cost') || message.toLowerCase().includes('order');
+    
+    if (isHighIntent) {
+         return {
+             text: "I can definitely help you with that! As an AI agent, I can connect you directly with our sales team for the best factory rates.\n\nCould you fill these quick details so they can contact you immediately with a quote?",
+             form: {
+                 type: 'lead_capture',
+                 title: 'Get Immediate Price Quote',
+                 submitLabel: 'Get Quote via WhatsApp',
+                 context: `Quote Request for ${intent}`,
+                 fields: [
+                     { name: 'name', label: 'Your Name', type: 'text' },
+                     { name: 'location', label: 'Your Location (State)', type: 'text' },
+                     { name: 'animal', label: 'Animal Type', type: 'select', options: ['Poultry', 'Cattle', 'Goats/Sheep', 'Pigs', 'Pets', 'Other'] }
+                 ]
+             }
+         };
     }
   }
 
@@ -615,6 +659,13 @@ function buildContextualResponse(
       text += "\n\n💡 *I see you're browsing our products. Want me to recommend something specific for your needs?*";
     } else if (context.page.includes('emergency') && intent !== 'emergency') {
       text += "\n\n🚨 *If this is an emergency, don't hesitate — our vets are available 24/7 for immediate assistance.*";
+    } else if (intent === 'emergency' || context.page.includes('emergency')) {
+        return {
+            text,
+            link: response.link,
+            linkText: response.linkText,
+            isEmergency: true
+        };
     }
     
     // Add insight based on mentioned animals
@@ -637,44 +688,96 @@ function buildContextualResponse(
 function buildDiagnosticResponse(
   animals: string[],
   symptoms: string[]
-): { text: string; link?: string; linkText?: string } {
+): { text: string; link?: string; linkText?: string; card?: DiagnosticCardData } {
   const animalStr = animals.join(' and ');
   const symptomStr = symptoms.join(', ');
   
-  let text = `🔍 **Quick Assessment for your ${animalStr}:**\n\nYou mentioned: *${symptomStr}*\n\n`;
+  let text = `🔍 **Quick Assessment for your ${animalStr}:**\n\nI've analyzed the symptoms: *${symptomStr}*.`;
+  let card: DiagnosticCardData | undefined;
 
-  // Targeted recommendations
+  // Targeted recommendations with Cards
   if (symptoms.some(s => ['cough', 'sneez', 'breathing', 'respiratory', 'discharge', 'mucus'].includes(s))) {
-    text += "This sounds like a **respiratory issue**. I recommend:\n";
-    text += "• **Maxitet** — Antibiotic treatment for bacterial respiratory infections\n";
-    text += "• **Maxi Vitaconc** — Vitamin support during recovery\n";
-    text += "• Improve ventilation immediately\n\n";
+    text += "\n\nBased on these signs, I suspect a **Respiratory Infection**.";
+    card = {
+      type: 'diagnostic',
+      title: 'Respiratory Health Alert',
+      symptom: 'Respiratory Distress',
+      probableCause: 'CRD or Pneumonia',
+      severity: 'high',
+      confidence: 0.89,
+      recommendations: [
+        { product: 'Maxitet', action: 'Treats bacterial infection' },
+        { product: 'Maxi Vitaconc', action: 'Boosts immunity recovery' }
+      ]
+    };
   }
   
-  if (symptoms.some(s => ['diarrhea', 'diarrhoea', 'bloody', 'bleeding'].includes(s))) {
-    text += "The **digestive symptoms** suggest:\n";
-    if (animals.includes('poultry')) {
-      text += "• **Maxicocc** — If droppings are bloody (likely coccidiosis)\n";
+  else if (symptoms.some(s => ['diarrhea', 'diarrhoea', 'bloody', 'bleeding'].includes(s))) {
+    if (animals.includes('poultry') && (symptoms.includes('bloody') || symptoms.includes('bleeding'))) {
+         text += "\n\n⚠️ **Bloody diarrhea is a classic sign of Coccidiosis.** This requires immediate attention.";
+         card = {
+            type: 'diagnostic',
+            title: 'Coccidiosis Warning',
+            symptom: 'Bloody Diarrhea',
+            probableCause: 'Eimeria (Coccidia)',
+            severity: 'critical',
+            confidence: 0.95,
+            recommendations: [
+                { product: 'Maxicocc', action: 'Stops bleeding fast' },
+                { product: 'Maxi Vitaconc', action: 'Restores lost vitamins' }
+            ]
+         };
+    } else {
+        text += "\n\nDigestive issues can dehydrate animals quickly.";
+        card = {
+            type: 'diagnostic',
+            title: 'Digestive Disturbance',
+            symptom: 'Diarrhea / Scours',
+            probableCause: 'Bacterial Enteritis',
+            severity: 'medium',
+            confidence: 0.75,
+            recommendations: [
+                { product: 'Maxitet', action: 'Broad spectrum antibiotic' },
+                { product: 'Multi-Vitamins', action: 'Rehydration support' }
+            ]
+        };
     }
-    text += "• **Maxitet** — If bacterial infection is suspected\n";
-    text += "• Provide clean water with oral rehydration\n\n";
   }
   
-  if (symptoms.some(s => ['scratch', 'itch', 'rash', 'tick'].includes(s))) {
-    text += "For **skin/parasite issues**:\n";
-    text += "• **Ectomax Spray** — Apply directly to affected areas\n\n";
+  else if (symptoms.some(s => ['scratch', 'itch', 'rash', 'tick', 'lice', 'flea'].includes(s))) {
+    text += "\n\nParasites are likely the cause.";
+    card = {
+        type: 'diagnostic',
+        title: 'Parasite Detected',
+        symptom: 'Skin / External Parasites',
+        probableCause: 'Ticks, Lice, or Mites',
+        severity: 'medium',
+        confidence: 0.92,
+        recommendations: [
+            { product: 'Ectomax Spray', action: 'Kills parasites on contact' }
+        ]
+    };
   }
 
-  if (symptoms.some(s => ['not eating', 'weak', 'letharg', 'loss of appetite'].includes(s))) {
-    text += "**Loss of appetite/weakness** can indicate many conditions. Key steps:\n";
-    text += "• Isolate the affected animal(s)\n";
-    text += "• Check temperature if possible\n";
-    text += "• Provide **Maxi Vitaconc** in water\n\n";
+  else if (symptoms.some(s => ['not eating', 'weak', 'letharg', 'loss of appetite'].includes(s))) {
+    text += "\n\nGeneral weakness is a warning sign of many potential issues.";
+    card = {
+        type: 'diagnostic',
+        title: 'General Malaise',
+        symptom: 'Loss of Appetite / Weakness',
+        probableCause: 'Stress or Early Infection',
+        severity: 'medium',
+        confidence: 0.65,
+        recommendations: [
+            { product: 'Maxi Vitaconc', action: 'Immediate energy boost' },
+            { product: 'Viramax', action: 'Immune system support' }
+        ]
+    };
   }
 
-  text += "⚠️ For an accurate diagnosis, I recommend contacting our vet team:";
+  text += "\n\n⚠️ *This AI assessment is for guidance only. For critical cases, consult a vet.*";
 
-  return { text, link: '/contact', linkText: "Consult a Vet" };
+  return { text, link: '/contact', linkText: "Consult a Vet", card };
 }
 
 function buildAnimalSpecificFollowUp(animals: string[]): { text: string; link?: string; linkText?: string } {
@@ -744,7 +847,7 @@ function buildSmartFallback(
 export const generateResponse = (
   message: string, 
   context: ChatContext
-): Promise<{ text: string; link?: string; linkText?: string }> => {
+): Promise<{ text: string; link?: string; linkText?: string; card?: DiagnosticCardData; form?: LeadGenFormData; isEmergency?: boolean }> => {
   return new Promise((resolve) => {
     // Simulate thinking time — longer for complex messages
     const thinkTime = 600 + Math.min(message.length * 10, 800) + Math.random() * 400;
