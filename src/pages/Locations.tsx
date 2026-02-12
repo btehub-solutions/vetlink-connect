@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Clock, Phone, MessageCircle, ArrowRight, Navigation, Send, ExternalLink } from "lucide-react";
+import { MapPin, Clock, Phone, ArrowRight, Navigation, Send, ExternalLink } from "lucide-react";
 import InquiryFormModal from "@/components/InquiryFormModal";
 import { generalContactContext } from "@/lib/inquiry";
 import type { PageContext } from "@/lib/inquiry";

@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { useRef } from "react";
 
 interface GalleryItem {
@@ -11,7 +11,7 @@ interface GalleryScrollProps {
   items: GalleryItem[];
 }
 
-const GalleryCard = ({ item, index, scrollYProgress }: { item: GalleryItem; index: number; scrollYProgress: any }) => {
+const GalleryCard = ({ item, index, scrollYProgress }: { item: GalleryItem; index: number; scrollYProgress: MotionValue<number> }) => {
   const yOffset = useTransform(
     scrollYProgress,
     [0, 1],

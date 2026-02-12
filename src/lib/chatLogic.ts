@@ -713,7 +713,7 @@ function buildSmartFallback(
   if (isQuestion && hasAnimalContext) {
     const animalStr = conversationState.mentionedAnimals.join(' and ');
     return {
-      text: `That's a great question about your ${animalStr}! While I may not have the exact answer, our veterinary team with 17+ years of experience can definitely help.\n\nHere's what I suggest:\n• **Ask me simpler questions** — like \"What products do you recommend for ${conversationState.mentionedAnimals[0]}?\"\n• **Describe symptoms** — and I'll try to recommend treatments\n• **Contact our experts** — for detailed, personalized advice\n\nOr try asking about: products, vaccination schedules, feeding plans, or disease symptoms!`,
+      text: `That's a great question about your ${animalStr}! While I may not have the exact answer, our veterinary team with 17+ years of experience can definitely help.\n\nHere's what I suggest:\n• **Ask me simpler questions** — like "What products do you recommend for ${conversationState.mentionedAnimals[0]}?"\n• **Describe symptoms** — and I'll try to recommend treatments\n• **Contact our experts** — for detailed, personalized advice\n\nOr try asking about: products, vaccination schedules, feeding plans, or disease symptoms!`,
       link: '/contact',
       linkText: 'Speak to an Expert'
     };
@@ -730,7 +730,7 @@ function buildSmartFallback(
   // General conversational response
   const contextResponses = [
     `I hear you! To give you the best possible advice, could you tell me:\n• **What animals** you're working with?\n• **What challenge** you're facing?\n\nThe more details you share, the better I can help. I'm trained on 17+ years of Divine Agvet's veterinary expertise! 🌿`,
-    `Thanks for sharing! I want to make sure I give you the most useful response. Could you elaborate a bit?\n\nFor example:\n• \"My chickens are coughing\" → I'll recommend specific treatments\n• \"I need products for goats\" → I'll show you what we have\n• \"How do I vaccinate my layers?\" → I'll give you a full schedule\n\nI'm here to help! 💪`,
+    `Thanks for sharing! I want to make sure I give you the most useful response. Could you elaborate a bit?\n\nFor example:\n• "My chickens are coughing" → I'll recommend specific treatments\n• "I need products for goats" → I'll show you what we have\n• "How do I vaccinate my layers?" → I'll give you a full schedule\n\nI'm here to help! 💪`,
     `I appreciate that! Let me understand better so I can assist you properly.\n\nYou can ask me anything about:\n• 🏥 Animal health & disease treatment\n• 💊 Our product range & recommendations\n• 📞 How to reach our expert vet team\n• 📦 Orders, pricing & delivery\n\nJust describe your situation and I'll guide you! 🙏`
   ];
 
