@@ -86,12 +86,12 @@ export type GeneralContactData = z.infer<typeof generalContactSchema>;
 // ── Animal Types Options ───────────────────────────────────────────
 // Note: values are plain text (used in WhatsApp messages), labels have emojis (for UI display)
 export const animalTypeOptions: { value: string; label: string; displayValue: string }[] = [
-  { value: "poultry", label: "🐔 Poultry (Chicken, Turkey, etc.)", displayValue: "Poultry (Chicken, Turkey, etc.)" },
-  { value: "cattle", label: "🐄 Cattle", displayValue: "Cattle" },
-  { value: "goats_sheep", label: "🐐 Goats & Sheep", displayValue: "Goats & Sheep" },
-  { value: "dogs_cats", label: "🐕 Dogs & Cats", displayValue: "Dogs & Cats" },
-  { value: "fish", label: "🐟 Fish / Aquaculture", displayValue: "Fish / Aquaculture" },
-  { value: "other", label: "🐾 Other", displayValue: "Other" },
+  { value: "poultry", label: "Poultry (Chicken, Turkey, etc.)", displayValue: "Poultry (Chicken, Turkey, etc.)" },
+  { value: "cattle", label: "Cattle", displayValue: "Cattle" },
+  { value: "goats_sheep", label: "Goats & Sheep", displayValue: "Goats & Sheep" },
+  { value: "dogs_cats", label: "Dogs & Cats", displayValue: "Dogs & Cats" },
+  { value: "fish", label: "Fish / Aquaculture", displayValue: "Fish / Aquaculture" },
+  { value: "other", label: "Other", displayValue: "Other" },
 ];
 
 export const consultationTopics = [

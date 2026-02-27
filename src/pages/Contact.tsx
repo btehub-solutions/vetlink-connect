@@ -135,7 +135,7 @@ const ContactPage = () => {
               <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center mb-6 animate-pulse border border-white/10">
                 <AlertTriangle size={32} className="text-white" />
               </div>
-              <p className="font-bold text-xl text-white mb-3">🚨 Emergency Line</p>
+              <p className="font-bold text-xl text-white mb-3">Emergency Line</p>
               <p className="text-red-100/70 text-sm mb-6">
                 For emergencies, use our dedicated emergency page for structured reporting
               </p>

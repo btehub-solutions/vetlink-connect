@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Pencil, Trash2, X } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Stethoscope, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -78,7 +78,10 @@ const AdminProducts = () => {
         </Button>
       </div>
 
-      <p className="text-xs text-muted-foreground mb-4">⚠️ This is UI only — no backend connection yet</p>
+      <p className="text-xs text-muted-foreground mb-4 flex items-center gap-1.5">
+        <AlertCircle size={14} className="text-amber-500" />
+        This is UI only — no backend connection yet
+      </p>
 
       {/* Table */}
       <div className="glass rounded-2xl overflow-hidden">
@@ -96,7 +99,9 @@ const AdminProducts = () => {
               {products.map((p) => (
                 <tr key={p.id} className="border-b border-border/30 hover:bg-muted/30 transition-colors">
                   <td className="p-4">
-                    <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground text-lg">🏥</div>
+                    <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
+                      <Stethoscope size={20} />
+                    </div>
                   </td>
                   <td className="p-4 font-medium">{p.name}</td>
                   <td className="p-4 hidden sm:table-cell">

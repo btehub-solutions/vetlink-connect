@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageCircle, Filter, ArrowRight, CheckCircle2, ShieldCheck, Send } from "lucide-react";
+import { X, MessageCircle, Filter, ArrowRight, CheckCircle2, ShieldCheck, Send, Target, Pill, ClipboardList } from "lucide-react";
 import InquiryFormModal from "@/components/InquiryFormModal";
 import { productContext } from "@/lib/inquiry";
 
@@ -314,22 +314,28 @@ const ProductsPage = () => {
 
               {/* Product Intelligence Layer */}
               <div className="space-y-3 mb-8">
-                <div className="flex items-start gap-3 bg-white/[0.03] border border-white/5 rounded-xl p-4">
-                  <span className="text-lg">🎯</span>
+                <div className="flex items-start gap-4 bg-white/[0.03] border border-white/5 rounded-xl p-4">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+                    <Target size={18} className="text-emerald-400" />
+                  </div>
                   <div>
                     <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Target Animals</span>
                     <span className="text-sm text-slate-300">{selected.targetAnimals}</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 bg-white/[0.03] border border-white/5 rounded-xl p-4">
-                  <span className="text-lg">💊</span>
+                <div className="flex items-start gap-4 bg-white/[0.03] border border-white/5 rounded-xl p-4">
+                  <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                    <Pill size={18} className="text-blue-400" />
+                  </div>
                   <div>
                     <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Common Problems Addressed</span>
                     <span className="text-sm text-slate-300">{selected.commonProblems}</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 bg-white/[0.03] border border-white/5 rounded-xl p-4">
-                  <span className="text-lg">📋</span>
+                <div className="flex items-start gap-4 bg-white/[0.03] border border-white/5 rounded-xl p-4">
+                  <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0">
+                    <ClipboardList size={18} className="text-amber-400" />
+                  </div>
                   <div>
                     <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Usage</span>
                     <span className="text-sm text-slate-300">{selected.usage}</span>

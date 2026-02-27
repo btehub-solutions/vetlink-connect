@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { HelpCircle, MessageCircle, ArrowRight, Send } from "lucide-react";
+import { HelpCircle, MessageCircle, ArrowRight, Send, ShoppingCart, AlertTriangle, MapPin, Truck, CheckCircle2, MessageSquare, Handshake, CreditCard } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import InquiryFormModal from "@/components/InquiryFormModal";
 import { generalContactContext } from "@/lib/inquiry";
 
 const faqs = [
-  { q: "How do I place an order?", a: "Simply click any \"Order\" or \"Inquire\" button on our website, and you'll be directed to WhatsApp. Send us a message with the product or service you need, and our team will respond promptly with availability and pricing.", icon: "🛒" },
-  { q: "Do you offer emergency services?", a: "Yes! We provide 24/7 emergency veterinary support. Click the \"Emergency\" page or contact us immediately via WhatsApp for urgent situations. Our average response time is under 5 minutes.", icon: "🚨" },
-  { q: "What areas do you serve?", a: "We operate from our Warehouse in Monatan, Ibadan (Oyo State) and our Factory in Ikoyi-Ile (Osun State). We can arrange product delivery to most locations across Nigeria. Contact us via WhatsApp to confirm delivery to your area.", icon: "📍" },
-  { q: "How quickly can I get products?", a: "Delivery times vary by location. For areas close to Ibadan and Osun State, most orders are fulfilled within 24-48 hours. For other areas, please allow 3-5 business days. Emergency supplies are prioritized.", icon: "🚚" },
-  { q: "Are your products genuine?", a: "Absolutely. We manufacture our products locally under strict NAFDAC regulations, guaranteeing purity and potency in every bottle. Product authenticity is our top priority.", icon: "✅" },
-  { q: "Can I get veterinary advice via WhatsApp?", a: "Yes! Our licensed veterinarians are available for consultations via WhatsApp. Contact us to schedule a consultation or get quick advice for non-emergency situations.", icon: "💬" },
-  { q: "Do you work with veterinary clinics and distributors?", a: "Yes, we supply veterinary clinics, practices, and distributors. We offer competitive pricing for bulk orders. Message us on WhatsApp to discuss partnership opportunities.", icon: "🤝" },
-  { q: "What payment methods do you accept?", a: "We accept bank transfers, mobile money, and other secure payment methods. Payment details will be shared via WhatsApp after order confirmation.", icon: "💳" },
+  { q: "How do I place an order?", a: "Simply click any \"Order\" or \"Inquire\" button on our website, and you'll be directed to WhatsApp. Send us a message with the product or service you need, and our team will respond promptly with availability and pricing.", icon: ShoppingCart },
+  { q: "Do you offer emergency services?", a: "Yes! We provide 24/7 emergency veterinary support. Click the \"Emergency\" page or contact us immediately via WhatsApp for urgent situations. Our average response time is under 5 minutes.", icon: AlertTriangle },
+  { q: "What areas do you serve?", a: "We operate from our Warehouse in Monatan, Ibadan (Oyo State) and our Factory in Ikoyi-Ile (Osun State). We can arrange product delivery to most locations across Nigeria. Contact us via WhatsApp to confirm delivery to your area.", icon: MapPin },
+  { q: "How quickly can I get products?", a: "Delivery times vary by location. For areas close to Ibadan and Osun State, most orders are fulfilled within 24-48 hours. For other areas, please allow 3-5 business days. Emergency supplies are prioritized.", icon: Truck },
+  { q: "Are your products genuine?", a: "Absolutely. We manufacture our products locally under strict NAFDAC regulations, guaranteeing purity and potency in every bottle. Product authenticity is our top priority.", icon: CheckCircle2 },
+  { q: "Can I get veterinary advice via WhatsApp?", a: "Yes! Our licensed veterinarians are available for consultations via WhatsApp. Contact us to schedule a consultation or get quick advice for non-emergency situations.", icon: MessageSquare },
+  { q: "Do you work with veterinary clinics and distributors?", a: "Yes, we supply veterinary clinics, practices, and distributors. We offer competitive pricing for bulk orders. Message us on WhatsApp to discuss partnership opportunities.", icon: Handshake },
+  { q: "What payment methods do you accept?", a: "We accept bank transfers, mobile money, and other secure payment methods. Payment details will be shared via WhatsApp after order confirmation.", icon: CreditCard },
 ];
 
 const FAQsPage = () => {
@@ -84,7 +84,7 @@ const FAQsPage = () => {
                 >
                   <AccordionTrigger className="text-left font-bold text-base text-slate-200 hover:text-emerald-400 hover:no-underline py-5 transition-colors">
                     <span className="flex items-center gap-3">
-                      <span className="text-lg">{faq.icon}</span>
+                      <faq.icon size={18} className="text-emerald-500/70" />
                       {faq.q}
                     </span>
                   </AccordionTrigger>

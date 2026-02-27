@@ -12,6 +12,12 @@ import {
   ChevronRight,
   CheckCircle2,
   Loader2,
+  Package,
+  Stethoscope,
+  Users,
+  Handshake,
+  Mail,
+  AlertTriangle,
 } from "lucide-react";
 import {
   PageContext,
@@ -46,43 +52,43 @@ interface InquiryFormModalProps {
 // ── Heading config per inquiry type ────────────────────────────────
 const headingConfig: Record<
   string,
-  { title: string; subtitle: string; gradient: string; icon: string }
+  { title: string; subtitle: string; gradient: string; icon: React.ElementType }
 > = {
   product_inquiry: {
     title: "Inquire About This Product",
     subtitle: "Fill in your details and we'll respond with pricing & availability.",
     gradient: "from-emerald-600 to-cyan-600",
-    icon: "📦",
+    icon: Package,
   },
   service_request: {
     title: "Request Veterinary Support",
     subtitle: "Describe your needs and our team will get back to you promptly.",
     gradient: "from-blue-600 to-emerald-600",
-    icon: "🩺",
+    icon: Stethoscope,
   },
   consultation: {
     title: "Book a Consultation",
     subtitle: "Get expert veterinary advice directly from our team.",
     gradient: "from-purple-600 to-blue-600",
-    icon: "💬",
+    icon: Users,
   },
   partnership: {
     title: "Become a Partner",
     subtitle: "Let's explore distribution and business opportunities together.",
     gradient: "from-amber-600 to-emerald-600",
-    icon: "🤝",
+    icon: Handshake,
   },
   general_contact: {
     title: "Get in Touch",
     subtitle: "We'd love to hear from you. Send us a message.",
     gradient: "from-slate-600 to-emerald-600",
-    icon: "📩",
+    icon: Mail,
   },
   emergency: {
     title: "Emergency Support",
     subtitle: "Fill these details quickly so we can help you faster.",
     gradient: "from-red-600 to-orange-600",
-    icon: "🚨",
+    icon: AlertTriangle,
   },
 };
 
@@ -188,7 +194,7 @@ export default function InquiryFormModal({
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full blur-2xl -translate-x-1/2 translate-y-1/2" />
               <div className="relative z-10">
-                <span className="text-3xl mb-2 block">{config.icon}</span>
+                <config.icon className="text-white/90 w-10 h-10 mb-3" strokeWidth={1.5} />
                 <h2 className="text-2xl font-black text-white mb-1">
                   {displayTitle}
                 </h2>
@@ -555,7 +561,7 @@ function SuccessState({ onClose }: { onClose: () => void }) {
         <CheckCircle2 size={40} className="text-emerald-400" />
       </motion.div>
       <h3 className="text-xl font-bold text-white mb-2">
-        You're All Set! 🎉
+        Inquiry Sent Successfully
       </h3>
       <p className="text-slate-400 text-sm max-w-xs mb-8">
         Your inquiry has been prepared on WhatsApp. Just hit send and our team will

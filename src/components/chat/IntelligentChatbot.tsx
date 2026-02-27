@@ -15,7 +15,8 @@ import {
   Pill,
   Phone,
   ExternalLink,
-  RefreshCw
+  RefreshCw,
+  Lightbulb
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useLocation, Link } from "react-router-dom";
@@ -263,7 +264,10 @@ const IntelligentChatbot = () => {
                         msg.text.split('💡').map((part, i) => (
                           i === 0 
                             ? <span key={i}>{parseMarkdown(part)}</span>
-                            : <div key={i} className="mt-3 p-3 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-2xl border border-emerald-500/20 italic text-xs animate-in fade-in slide-in-from-bottom-2 duration-700">💡{parseMarkdown(part)}</div>
+                            : <div key={i} className="mt-3 p-3 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-2xl border border-emerald-500/20 italic text-xs animate-in fade-in slide-in-from-bottom-2 duration-700 flex items-start gap-2">
+                                <Lightbulb size={14} className="text-emerald-500 flex-shrink-0 mt-0.5" />
+                                <div>{parseMarkdown(part)}</div>
+                              </div>
                         ))
                       ) : (
                         msg.text
@@ -385,7 +389,7 @@ const IntelligentChatbot = () => {
               className="bg-slate-900 border border-emerald-500/20 text-white text-sm px-4 py-3 rounded-2xl rounded-br-sm shadow-xl max-w-[240px] backdrop-blur-md"
             >
               <p className="font-medium text-xs">
-                👋 Need help? Click here to chat with our
+                Need help? Click here to chat with our
                 <span className="text-emerald-400 font-bold"> Agvet AI Assistant</span> for
                 instant support
               </p>

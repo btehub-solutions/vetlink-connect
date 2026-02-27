@@ -35,7 +35,7 @@ const FloatingWhatsApp = () => {
               className="bg-slate-900 border border-emerald-500/20 text-white text-sm px-4 py-3 rounded-2xl rounded-br-sm shadow-xl max-w-[240px] backdrop-blur-md"
             >
               <p className="font-medium text-xs">
-                👋 Need help? Click here to send us a
+                Need help? Click here to send us a
                 <span className="text-emerald-400 font-bold"> structured inquiry</span> via
                 WhatsApp
               </p>
