@@ -13,10 +13,25 @@ import {
   HelpCircle,
   Stethoscope,
   Pill,
+  Lightbulb,
+  Hand,
+  Bird,
+  Milk,
+  AlertTriangle,
+  Package,
+  Leaf,
+  PawPrint,
+  Activity,
+  Droplets,
+  Stethoscope,
+  Handshake,
+  MapPin,
+  CreditCard,
+  ShoppingCart,
   Phone,
   ExternalLink,
   RefreshCw,
-  Lightbulb
+  FlaskConical
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useLocation, Link } from "react-router-dom";
@@ -36,46 +51,6 @@ interface ChatMessage {
   isEmergency?: boolean;
 }
 
-// Simple markdown parser for chat messages
-const parseMarkdown = (text: string): React.ReactNode[] => {
-  // Split text into lines
-  const lines = text.split('\n');
-  const elements: React.ReactNode[] = [];
-  
-  lines.forEach((line, lineIdx) => {
-    if (lineIdx > 0) {
-      elements.push(<br key={`br-${lineIdx}`} />);
-    }
-    
-    // Parse inline formatting: **bold**, *italic*
-    const parts = line.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
-    
-    parts.forEach((part, partIdx) => {
-      const key = `${lineIdx}-${partIdx}`;
-      
-      if (part.startsWith('**') && part.endsWith('**')) {
-        // Bold
-        elements.push(
-          <strong key={key} className="font-bold">
-            {part.slice(2, -2)}
-          </strong>
-        );
-      } else if (part.startsWith('*') && part.endsWith('*') && !part.startsWith('**')) {
-        // Italic
-        elements.push(
-          <em key={key} className="italic opacity-80">
-            {part.slice(1, -1)}
-          </em>
-        );
-      } else {
-        elements.push(<span key={key}>{part}</span>);
-      }
-    });
-  });
-  
-  return elements;
-};
-
 const IntelligentChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -85,6 +60,86 @@ const IntelligentChatbot = () => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [hasHovered, setHasHovered] = useState(false);
   const [isEmergencyMode, setIsEmergencyMode] = useState(false);
+  
+  // ── Enhanced Content Renderer ─────────────────────────────────────
+  const EmojiToIcon: Record<string, React.ElementType> = {
+    '👋': Hand,
+    '🐔': Bird,
+    '🐄': Milk,
+    '💊': Pill,
+    '🚨': AlertTriangle,
+    '📦': Package,
+    '🌿': Leaf,
+    '🐾': PawPrint,
+    '🫁': Activity,
+    '💧': Droplets,
+    '🩺': Stethoscope,
+    '🧪': FlaskConical,
+    '🤝': Handshake,
+    '📍': MapPin,
+    '💳': CreditCard,
+    '🛒': ShoppingCart,
+  };
+
+  const renderContent = (text: string) => {
+    // 1. Handle Markdown (Bold & Italic)
+    let parts: (string | React.ReactNode)[] = [text];
+
+    // Process Bold: **text**
+    const boldRegex = /\*\*(.*?)\*\*/g;
+    parts = parts.flatMap(part => {
+      if (typeof part !== 'string') return part;
+      const subParts = [];
+      let lastIndex = 0;
+      let match;
+      while ((match = boldRegex.exec(part)) !== null) {
+        subParts.push(part.substring(lastIndex, match.index));
+        subParts.push(<strong key={`bold-${match.index}`} className="font-bold text-white">{match[1]}</strong>);
+        lastIndex = boldRegex.lastIndex;
+      }
+      subParts.push(part.substring(lastIndex));
+      return subParts;
+    });
+
+    // Process Italic: *text*
+    const italicRegex = /\*(.*?)\*/g;
+    parts = parts.flatMap(part => {
+      if (typeof part !== 'string') return part;
+      const subParts = [];
+      let lastIndex = 0;
+      let match;
+      while ((match = italicRegex.exec(part)) !== null) {
+        subParts.push(part.substring(lastIndex, match.index));
+        subParts.push(<em key={`italic-${match.index}`} className="italic text-slate-300">{match[1]}</em>);
+        lastIndex = italicRegex.lastIndex;
+      }
+      subParts.push(part.substring(lastIndex));
+      return subParts;
+    });
+
+    // 2. Handle Emojis -> Lucide Icons
+    const emojiRegex = new RegExp(`(${Object.keys(EmojiToIcon).join('|')})`, 'g');
+    parts = parts.flatMap(part => {
+      if (typeof part !== 'string') return part;
+      const subParts = [];
+      let lastIndex = 0;
+      let match;
+      while ((match = emojiRegex.exec(part)) !== null) {
+        subParts.push(part.substring(lastIndex, match.index));
+        const IconComp = EmojiToIcon[match[0]];
+        subParts.push(
+          <span key={`emoji-${match.index}`} className="inline-flex items-center mx-0.5 align-middle">
+            <IconComp size={14} className="text-emerald-400" strokeWidth={2} />
+          </span>
+        );
+        lastIndex = emojiRegex.lastIndex;
+      }
+      subParts.push(part.substring(lastIndex));
+      return subParts;
+    });
+
+    return <>{parts}</>;
+  };
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
@@ -263,14 +318,14 @@ const IntelligentChatbot = () => {
                       {msg.sender === 'bot' ? (
                         msg.text.split('💡').map((part, i) => (
                           i === 0 
-                            ? <span key={i}>{parseMarkdown(part)}</span>
+                            ? <span key={i}>{renderContent(part)}</span>
                             : <div key={i} className="mt-3 p-3 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-2xl border border-emerald-500/20 italic text-xs animate-in fade-in slide-in-from-bottom-2 duration-700 flex items-start gap-2">
                                 <Lightbulb size={14} className="text-emerald-500 flex-shrink-0 mt-0.5" />
-                                <div>{parseMarkdown(part)}</div>
+                                <div>{renderContent(part)}</div>
                               </div>
                         ))
                       ) : (
-                        msg.text
+                        renderContent(msg.text)
                       )}
                     </div>
                     
