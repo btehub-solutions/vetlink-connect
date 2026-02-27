@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Bot, 
+  Bot,
   Send, 
   X, 
   MessageSquare, 
@@ -17,6 +17,7 @@ import {
   ExternalLink,
   RefreshCw
 } from "lucide-react";
+import logo from "@/assets/logo.png";
 import { useLocation, Link } from "react-router-dom";
 import { generateResponse, getInitialGreeting, DiagnosticCardData, LeadGenFormData } from "@/lib/chatLogic";
 import { DiagnosticCard } from "./DiagnosticCard";
@@ -206,8 +207,8 @@ const IntelligentChatbot = () => {
               <div className="absolute inset-0 bg-white/10 pattern-grid-lg opacity-10" />
               <div className="flex items-center gap-4 relative z-10">
                 <div className="relative">
-                  <div className={`w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center border border-white/30 backdrop-blur-sm shadow-inner group ${isEmergencyMode ? 'animate-bounce' : ''}`}>
-                    {isEmergencyMode ? <HelpCircle size={28} className="text-white" /> : <Bot size={28} className="group-hover:rotate-12 transition-transform" />}
+                  <div className={`w-12 h-12 rounded-2xl bg-white flex items-center justify-center border border-white/30 backdrop-blur-sm shadow-inner group ${isEmergencyMode ? 'animate-bounce' : ''}`}>
+                    {isEmergencyMode ? <HelpCircle size={28} className="text-red-500" /> : <img src={logo} alt="Agvet AI" className="w-8 h-8 object-contain group-hover:rotate-12 transition-transform" />}
                   </div>
                   <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white/50 shadow-sm ${isEmergencyMode ? 'bg-red-400 animate-ping' : 'bg-green-400 animate-pulse'}`} />
                 </div>
@@ -309,9 +310,9 @@ const IntelligentChatbot = () => {
                   className="flex justify-start"
                 >
                   <div className="bg-white dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 px-4 py-3 rounded-3xl rounded-tl-none shadow-sm flex items-center gap-3">
-                    <div className="relative w-6 h-6 flex items-center justify-center">
-                        <div className="absolute inset-0 bg-emerald-400/30 rounded-full animate-ping"></div>
-                        <Bot size={16} className="text-emerald-500 relative z-10" />
+                    <div className="relative w-8 h-8 flex items-center justify-center bg-white rounded-lg shadow-sm">
+                        <div className="absolute inset-0 bg-emerald-400/20 rounded-lg animate-ping"></div>
+                        <img src={logo} alt="Agvet AI" className="w-6 h-6 object-contain relative z-10" />
                     </div>
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-widest animate-pulse">Thinking...</span>
                   </div>
