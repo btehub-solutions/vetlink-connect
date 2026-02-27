@@ -244,21 +244,21 @@ const KNOWLEDGE_RESPONSES: KnowledgeResponse[] = [
     intent: 'greeting',
     responses: [
       { text: "Hello! 👋 Welcome to Divine Agvet. I'm your AI veterinary assistant, trained on 17+ years of field experience across Nigeria. I can help with:\n\n🐔 Poultry management & diseases\n🐄 Livestock health programs\n💊 Product recommendations\n🚨 Emergency vet support\n📦 Orders & delivery info\n\nWhat would you like help with today?", followUp: "What type of animals do you keep?" },
-      { text: "Hi there! 👋 I'm your Agvet AI — your 24/7 virtual veterinary consultant. Whether you're a large-scale farmer or just starting out, I'm here to guide you.\n\nTell me — what animals are you raising, and how can I help today?" }
+      { text: "Hi there! 😊 I'm your Agvet AI — your 24/7 virtual veterinary consultant. Whether you're a large-scale farmer or just starting out, I'm here to guide you.\n\nTell me — what animals are you raising, and how can I help today?" }
     ]
   },
   {
     intent: 'farewell',
     responses: [
-      { text: "Thanks for chatting! 🌿 Remember, Divine Agvet is here for you 24/7. Whether it's products, advice, or emergency help — we're just a message away. Good luck with your farm!" },
+      { text: "Thanks for chatting! 🙏 Remember, Divine Agvet is here for you 24/7. Whether it's products, advice, or emergency help — we're just a message away. Good luck with your farm! 🌿" },
       { text: "Goodbye! Feel free to come back anytime. Your animals' health is our priority. Take care! 👋" }
     ]
   },
   {
     intent: 'gratitude',
     responses: [
-      { text: "You're most welcome! 🌿 At Divine Agvet, your farm's success is our success. If you need anything else — product info, expert advice, or emergency help — I'm always here.\n\nIs there anything else I can help with?" },
-      { text: "Happy to help! That's what I'm here for. Don't hesitate to reach out whenever you need guidance. Your animals are in good hands with Divine Agvet. 🐾" }
+      { text: "You're most welcome! 🙏 At Divine Agvet, your farm's success is our success. If you need anything else — product info, expert advice, or emergency help — I'm always here.\n\nIs there anything else I can help with?" },
+      { text: "Happy to help! That's what I'm here for. Don't hesitate to reach out whenever you need guidance. Your animals are in good hands with Divine Agvet! 🐾" }
     ]
   },
   {
@@ -271,7 +271,7 @@ const KNOWLEDGE_RESPONSES: KnowledgeResponse[] = [
     intent: 'farm_help',
     responses: [
       { text: "I'd love to help with your farm! 🌿 To give you the best guidance, let me understand your situation:\n\n1️⃣ **What animals do you keep?**\n   (Poultry, cattle, goats, sheep, pigs, fish, pets?)\n\n2️⃣ **What's the main challenge?**\n   • Animals are sick or showing symptoms\n   • Need product recommendations\n   • Looking for feeding/nutrition advice\n   • Want a vaccination schedule\n   • General farm management tips\n\nJust describe your situation and I'll guide you step by step!", followUp: "Tell me more about what's happening on your farm." },
-      { text: "Absolutely, I'm here to help! 🌿 With 17 years of expertise supporting Nigerian farmers, we've seen it all.\n\nCould you tell me:\n• What type of animals are you raising?\n• How many do you have?\n• What specific issue or question do you have?\n\nThe more detail you give me, the better I can assist!" }
+      { text: "Absolutely, I'm here to help! 💪 With 17 years of expertise supporting Nigerian farmers, we've seen it all.\n\nCould you tell me:\n• What type of animals are you raising?\n• How many do you have?\n• What specific issue or question do you have?\n\nThe more detail you give me, the better I can assist!" }
     ]
   },
   {
@@ -833,8 +833,8 @@ function buildSmartFallback(
   // General conversational response
   const contextResponses = [
     `I hear you! To give you the best possible advice, could you tell me:\n• **What animals** you're working with?\n• **What challenge** you're facing?\n\nThe more details you share, the better I can help. I'm trained on 17+ years of Divine Agvet's veterinary expertise! 🌿`,
-    `Thanks for sharing! I want to make sure I give you the most useful response. Could you elaborate a bit?\n\nFor example:\n• "My chickens represent a challenge" → I'll recommend specific treatments\n• "I need products for goats" → I'll show you what we have\n• "How do I vaccinate my layers?" → I'll give you a full schedule\n\nI'm here to help! 🌿`,
-    `I appreciate that! Let me understand better so I can assist you properly.\n\nYou can ask me anything about:\n• 🩺 Animal health & disease treatment\n• 💊 Our product range & recommendations\n• 📞 How to reach our expert vet team\n• 📦 Orders, pricing & delivery\n\nJust describe your situation and I'll guide you! 🌿`
+    `Thanks for sharing! I want to make sure I give you the most useful response. Could you elaborate a bit?\n\nFor example:\n• "My chickens are coughing" → I'll recommend specific treatments\n• "I need products for goats" → I'll show you what we have\n• "How do I vaccinate my layers?" → I'll give you a full schedule\n\nI'm here to help! 💪`,
+    `I appreciate that! Let me understand better so I can assist you properly.\n\nYou can ask me anything about:\n• 🏥 Animal health & disease treatment\n• 💊 Our product range & recommendations\n• 📞 How to reach our expert vet team\n• 📦 Orders, pricing & delivery\n\nJust describe your situation and I'll guide you! 🙏`
   ];
 
   return {
@@ -894,5 +894,5 @@ export const getInitialGreeting = (context: ChatContext): string => {
   if (context.page.includes('faq')) {
     return `${timeGreeting}! 👋 I see you're looking at FAQs. I might be able to answer your questions faster!\n\nJust ask me anything about products, orders, delivery, or animal health.`;
   }
-  return `${timeGreeting}! 👋 I'm **Agvet AI** — your intelligent veterinary assistant, powered by 17 years of Divine Agvet expertise.\n\nI can help with:\n🐔 Poultry & livestock health\n🐄 Livestock health programs\n💊 Product recommendations\n🚨 Emergency vet support\n📦 Orders & delivery\n\nWhat can I help you with today?`;
+  return `${timeGreeting}! 👋 I'm **Agvet AI** — your intelligent veterinary assistant, powered by 17 years of Divine Agvet expertise.\n\nI can help with:\n🐔 Poultry & livestock health\n💊 Product recommendations\n🚨 Emergency vet support\n📦 Orders & delivery\n\nWhat can I help you with today?`;
 };
