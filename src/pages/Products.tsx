@@ -29,6 +29,7 @@ interface Product {
 }
 
 const products: Product[] = [
+  /* ── Livestock ────────────────────────────────────── */
   {
     name: "Viramax 150ml",
     category: "Livestock",
@@ -38,16 +39,6 @@ const products: Product[] = [
     targetAnimals: "Cattle, Poultry, Goats",
     commonProblems: "Vitamin deficiency, low immunity, poor growth",
     usage: "Oral administration as directed by veterinarian",
-  },
-  {
-    name: "Maxitet Antibiotic",
-    category: "Vet Supplies",
-    desc: "Oxytetracycline Hydrochloride broad-spectrum antibiotic.",
-    fullDesc: "Maxitet is a soluble powder containing Oxytetracycline Hydrochloride BP (Vet). Broad-spectrum antibiotic for veterinary use only. 100g net weight. NAFDAC: A18-0517.",
-    image: imgMaxitet,
-    targetAnimals: "All livestock & poultry",
-    commonProblems: "Bacterial infections, respiratory disease, enteritis",
-    usage: "Dissolve in drinking water as per dosage chart",
   },
   {
     name: "Viramax 150ml (Large)",
@@ -60,16 +51,6 @@ const products: Product[] = [
     usage: "Oral administration for large-scale operations",
   },
   {
-    name: "Maxiceryl",
-    category: "Vet Supplies",
-    desc: "Antibiotics + Multivitamin combination for animals.",
-    fullDesc: "Maxiceryl combines antibiotics with multivitamins for comprehensive veterinary care. 100g net weight. For veterinary use only. Manufactured by Divine Agvet Limited.",
-    image: imgMaxiceryl,
-    targetAnimals: "Poultry, Cattle, Goats",
-    commonProblems: "Recovery support, immune boosting, infection control",
-    usage: "Mix with feed or water as directed",
-  },
-  {
     name: "Maxi Vitaconc",
     category: "Livestock",
     desc: "Concentrated hydrosoluble vitamin and amino acid.",
@@ -78,36 +59,6 @@ const products: Product[] = [
     targetAnimals: "Poultry, Cattle, Goats & Sheep",
     commonProblems: "Stress recovery, poor egg production, slow growth",
     usage: "Dissolve in drinking water during stress periods",
-  },
-  {
-    name: "Enrocoli-Max",
-    category: "Vet Supplies",
-    desc: "Enrofloxacin + Colistin broad spectrum antibiotics.",
-    fullDesc: "Enrocoli-Max contains Enrofloxacin (100mg/g) and Colistin Sulphate (1.2 million IU/g). Broad spectrum antibiotics for veterinary use. 100g net weight.",
-    image: imgEnrocoli,
-    targetAnimals: "Poultry, Livestock",
-    commonProblems: "CRD, E. coli, Salmonella, respiratory infections",
-    usage: "Dissolve in drinking water as per veterinary guidance",
-  },
-  {
-    name: "Ectomax Spray",
-    category: "Pet",
-    desc: "Tick & lice spray — kills fleas, ticks, and repels mosquitoes.",
-    fullDesc: "Ectomax Tick & Lice Spray kills fleas, ticks, flea eggs, flea larvae and repels mosquitoes. Breaks flea life cycle for up to 2 months. NAFDAC Reg. No. A-9672. By Divine Agvet Limited.",
-    image: imgEctomax,
-    targetAnimals: "Dogs, Cats, Pets",
-    commonProblems: "Ticks, fleas, lice, mosquito-borne diseases",
-    usage: "Spray directly on pet's coat, avoid eyes and mouth",
-  },
-  {
-    name: "Maxiyield Dog Food",
-    category: "Pet",
-    desc: "Premium dog food with zinc, selenium, chicken & fish.",
-    fullDesc: "Maxiyield Dog Food with Zinc & Selenium, Chicken & Fish flavour with Omega H3. 5kg pack for complete canine nutrition.",
-    image: imgMaxiyield,
-    targetAnimals: "Dogs",
-    commonProblems: "Nutritional deficiency, dull coat, low energy",
-    usage: "Serve as main daily meal per weight guidelines",
   },
   {
     name: "Maxicocc",
@@ -128,6 +79,60 @@ const products: Product[] = [
     targetAnimals: "Cattle, Goats, Poultry, Livestock",
     commonProblems: "Poor growth, low productivity, nutritional deficiency",
     usage: "Administer orally as directed — mix with feed or water per dosage guidelines",
+  },
+
+  /* ── Vet Supplies ─────────────────────────────────── */
+  {
+    name: "Maxitet Antibiotic",
+    category: "Vet Supplies",
+    desc: "Oxytetracycline Hydrochloride broad-spectrum antibiotic.",
+    fullDesc: "Maxitet is a soluble powder containing Oxytetracycline Hydrochloride BP (Vet). Broad-spectrum antibiotic for veterinary use only. 100g net weight. NAFDAC: A18-0517.",
+    image: imgMaxitet,
+    targetAnimals: "All livestock & poultry",
+    commonProblems: "Bacterial infections, respiratory disease, enteritis",
+    usage: "Dissolve in drinking water as per dosage chart",
+  },
+  {
+    name: "Maxiceryl",
+    category: "Vet Supplies",
+    desc: "Antibiotics + Multivitamin combination for animals.",
+    fullDesc: "Maxiceryl combines antibiotics with multivitamins for comprehensive veterinary care. 100g net weight. For veterinary use only. Manufactured by Divine Agvet Limited.",
+    image: imgMaxiceryl,
+    targetAnimals: "Poultry, Cattle, Goats",
+    commonProblems: "Recovery support, immune boosting, infection control",
+    usage: "Mix with feed or water as directed",
+  },
+  {
+    name: "Enrocoli-Max",
+    category: "Vet Supplies",
+    desc: "Enrofloxacin + Colistin broad spectrum antibiotics.",
+    fullDesc: "Enrocoli-Max contains Enrofloxacin (100mg/g) and Colistin Sulphate (1.2 million IU/g). Broad spectrum antibiotics for veterinary use. 100g net weight.",
+    image: imgEnrocoli,
+    targetAnimals: "Poultry, Livestock",
+    commonProblems: "CRD, E. coli, Salmonella, respiratory infections",
+    usage: "Dissolve in drinking water as per veterinary guidance",
+  },
+
+  /* ── Pet ──────────────────────────────────────────── */
+  {
+    name: "Ectomax Spray",
+    category: "Pet",
+    desc: "Tick & lice spray — kills fleas, ticks, and repels mosquitoes.",
+    fullDesc: "Ectomax Tick & Lice Spray kills fleas, ticks, flea eggs, flea larvae and repels mosquitoes. Breaks flea life cycle for up to 2 months. NAFDAC Reg. No. A-9672. By Divine Agvet Limited.",
+    image: imgEctomax,
+    targetAnimals: "Dogs, Cats, Pets",
+    commonProblems: "Ticks, fleas, lice, mosquito-borne diseases",
+    usage: "Spray directly on pet's coat, avoid eyes and mouth",
+  },
+  {
+    name: "Maxiyield Dog Food",
+    category: "Pet",
+    desc: "Premium dog food with zinc, selenium, chicken & fish.",
+    fullDesc: "Maxiyield Dog Food with Zinc & Selenium, Chicken & Fish flavour with Omega H3. 5kg pack for complete canine nutrition.",
+    image: imgMaxiyield,
+    targetAnimals: "Dogs",
+    commonProblems: "Nutritional deficiency, dull coat, low energy",
+    usage: "Serve as main daily meal per weight guidelines",
   },
 ];
 
