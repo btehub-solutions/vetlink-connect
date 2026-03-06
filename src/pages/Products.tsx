@@ -13,7 +13,6 @@ import imgEnrocoli from "@/assets/products/enrocoli-max.png";
 import imgEctomax from "@/assets/products/ectomax.png";
 import imgMaxiyield from "@/assets/products/maxiyield-dogfood.png";
 import imgMaxicocc from "@/assets/products/maxicocc.png";
-import imgMaxiyieldTonic from "@/assets/products/maxiyield-animal-tonic.png";
 
 type Category = "All" | "Livestock" | "Pet" | "Vet Supplies";
 
@@ -75,7 +74,7 @@ const products: Product[] = [
     category: "Livestock",
     desc: "Animal feed supplement tonic for health and productivity. 2 Litres.",
     fullDesc: "Maxiyield Animal Tonic is an animal feed supplement produced by Divine Agvet Ltd, 6 Ibadan Road, Ikoji Ile, Osun State. 2 Litre bottle. For animal use only.",
-    image: imgMaxiyieldTonic,
+    image: "/maxiyield-animal-tonic.png",
     targetAnimals: "Cattle, Goats, Poultry, Livestock",
     commonProblems: "Poor growth, low productivity, nutritional deficiency",
     usage: "Administer orally as directed — mix with feed or water per dosage guidelines",
