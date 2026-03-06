@@ -14,6 +14,7 @@ interface Product {
   name: string;
   description: string;
   category: string;
+  image?: string;
 }
 
 const initialProducts: Product[] = [
@@ -26,6 +27,7 @@ const initialProducts: Product[] = [
   { id: 7, name: "Livestock Dewormers", description: "Effective deworming solutions for all farm animals.", category: "Livestock" },
   { id: 8, name: "Veterinary Syringes", description: "Sterile, reliable syringes for all applications.", category: "Vet Supplies" },
   { id: 9, name: "Animal Antibiotics", description: "Trusted antibiotics for treating infections.", category: "Pet" },
+  { id: 10, name: "Maxiyield Animal Tonic", description: "Animal feed supplement (tonic) for livestock health and productivity. 2 Litres. Produced by Divine Agvet Ltd.", category: "Livestock", image: "/maxiyield-animal-tonic.png" },
 ];
 
 const AdminProducts = () => {
@@ -99,9 +101,13 @@ const AdminProducts = () => {
               {products.map((p) => (
                 <tr key={p.id} className="border-b border-border/30 hover:bg-muted/30 transition-colors">
                   <td className="p-4">
-                    <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
-                      <Stethoscope size={20} />
-                    </div>
+                    {p.image ? (
+                      <img src={p.image} alt={p.name} className="w-10 h-10 rounded-lg object-cover" />
+                    ) : (
+                      <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
+                        <Stethoscope size={20} />
+                      </div>
+                    )}
                   </td>
                   <td className="p-4 font-medium">{p.name}</td>
                   <td className="p-4 hidden sm:table-cell">
