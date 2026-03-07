@@ -98,7 +98,7 @@ export const SmartProductExplorer = ({ products, onInquiry, onEmergency }: Smart
         </div>
 
         {/* Controls */}
-        <div className="mb-12 flex flex-col md:flex-row gap-6 justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-100 sticky top-20 z-30">
+        <div className="mb-12 flex flex-col md:flex-row gap-6 justify-between items-center bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-md border border-slate-100 sticky top-0 z-40">
            
            {/* Search */}
            <div className="relative w-full md:w-96 group">

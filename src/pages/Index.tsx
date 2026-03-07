@@ -31,6 +31,7 @@ const products = [
   { name: "Maxitet Antibiotic", category: "Vet Supplies", img: imgMaxitet, price: "Available" },
   { name: "Ectomax Spray", category: "Pet Care", img: imgEctomax, price: "Available" },
   { name: "Maxiyield Food", category: "Nutrition", img: imgMaxiyield, price: "Available" },
+  { name: "Maxiyield Animal Tonic", category: "Livestock", img: "/maxiyield-animal-tonic.png", price: "Available" },
   { name: "Maxicocc", category: "Poultry", img: imgMaxicocc, price: "Available" },
   { name: "Viramax Large", category: "Livestock", img: imgViramaxLg, price: "Available" },
 ];
